@@ -16,35 +16,8 @@ class ParameterMode(enum.Enum):
     POSITION = 0
     IMMEDIATE = 1
 
-class Program:
-
-    integers: List[int]
-    index: int
-
-    def __init__(self, integers: str) -> None:
-        self.integers = list(map(int, integers.split(",")))
-        self.index = 0
-
-    def get_next(self, parameter_mode: Optional[ParameterMode] = None) -> int:
-        value = self.integers[self.index]
-        self.index += 1
-
-        if not parameter_mode or parameter_mode == ParameterMode.IMMEDIATE:
-            return value
-        else:
-            return self.integers[value]
-
-    def get_value(self, index: int) -> int:
-        return self.integers[index]
-
-    def set_value(self, value: int, index: int) -> None:
-        self.integers[index] = value
-
-    def state(self) -> str:
-        return ",".join(map(str, self.integers))
-
 def run_program(input_list: List[int]) -> int:
-    with open("2019/05/input.txt") as f:
+    with open("input_05.txt") as f:
         full_input = f.read().strip()
 
     program = Program(full_input)
@@ -136,4 +109,5 @@ def run_program(input_list: List[int]) -> int:
 
     return program.get_value(0)
 
+run_program([1])
 run_program([5])

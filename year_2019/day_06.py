@@ -1,4 +1,4 @@
-with open("2019/06/input.txt") as f:
+with open("input_06.txt") as f:
     full_input = f.read().strip()
 
 orbit_list = list(map(lambda x: x.split(")"), full_input.split("\n")))
@@ -8,6 +8,24 @@ orbits = {}
 for a, b in orbit_list:
     # b orbits around a
     orbits[b] = a
+
+orbit_count = 0
+
+for root_orbiter, root_center in orbits.items():
+    orbit_count += 1
+
+    orbiter = root_orbiter
+    center = root_center
+    while True:
+        if center in orbits:
+            orbiter = center
+            center = orbits[center]
+            orbit_count += 1
+        else:
+            break
+
+print("Part 1:", orbit_count)
+
 
 our_key = "YOU"
 our_path = [our_key]
@@ -40,8 +58,4 @@ for us, santa in zip(our_path, santa_path):
 our_path = our_path[count:]
 santa_path = santa_path[count:]
 
-print(count)
-print(our_path)
-print(santa_path)
-
-print(len(our_path) + len(santa_path) - 2)
+print("Part 2:", len(our_path) + len(santa_path) - 2)
