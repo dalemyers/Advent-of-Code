@@ -40,7 +40,7 @@ def run_amplifier(inputs: List[int], loop_back: bool = False) -> int:
             if amplifier.is_halted:
                 break
 
-            op_code, _ = intcode.Computer.opcode_parameters(amplifier.peek_next())
+            op_code, _ = intcode.Computer.opcode_parameters(amplifier.peek_next(intcode.ParameterMode.IMMEDIATE))
 
             if op_code == intcode.Opcode.INPUT and len(data_map[amplifier.name]) == 0:
                 break
