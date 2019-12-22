@@ -1,4 +1,5 @@
-from typing import List
+import itertools
+from typing import List, Tuple
 
 import intcode
 
@@ -7,47 +8,75 @@ with open("year_2019/input_07.txt") as input_file:
 
 input_values = list(map(int, contents.split(",")))
 
-def run_amplifier(inputs: List[int]) -> int:
-    outputs = []
+def run_amplifier(inputs: List[int], loop_back: bool = False) -> int:
 
-    ampA = intcode.Program(input_values, intcode.input_list_wrapper([inputs[0], 0]), outputs.append)
-    ampA.run()
+    ampA = intcode.Computer(name='a', program=input_values)
+    ampB = intcode.Computer(name='b', program=input_values)
+    ampC = intcode.Computer(name='c', program=input_values)
+    ampD = intcode.Computer(name='d', program=input_values)
+    ampE = intcode.Computer(name='e', program=input_values)
 
-    ampB = intcode.Program(input_values, intcode.input_list_wrapper([inputs[1], outputs[-1]]), outputs.append)
-    ampB.run()
+    data_map = {'a': [inputs[0], 0], 'b': [inputs[1]], 'c': [inputs[2]], 'd': [inputs[3]], 'e': [inputs[4]]}
 
-    ampC = intcode.Program(input_values, intcode.input_list_wrapper([inputs[2], outputs[-1]]), outputs.append)
-    ampC.run()
+    def append(key, value):
+        data_map[key].append(value)
 
-    ampD = intcode.Program(input_values, intcode.input_list_wrapper([inputs[3], outputs[-1]]), outputs.append)
-    ampD.run()
+    ampA.output_callback = lambda name, value: append('b', value)
+    ampB.output_callback = lambda name, value: append('c', value)
+    ampC.output_callback = lambda name, value: append('d', value)
+    ampD.output_callback = lambda name, value: append('e', value)
+    ampE.output_callback = lambda name, value: append('a', value)
 
-    ampE = intcode.Program(input_values, intcode.input_list_wrapper([inputs[4], outputs[-1]]), outputs.append)
-    ampE.run()
+    ampA.input_callback = lambda name: data_map[name].pop(0)
+    ampB.input_callback = lambda name: data_map[name].pop(0)
+    ampC.input_callback = lambda name: data_map[name].pop(0)
+    ampD.input_callback = lambda name: data_map[name].pop(0)
+    ampE.input_callback = lambda name: data_map[name].pop(0)
 
-    return outputs[-1]
+    iterations = {'a': 0, 'b': 0, 'c': 0, 'd': 0, 'e': 0}
 
-max_output = 0
-max_index = 0
-for a in range(0, 5):
-    for b in range(0, 5):
-        for c in range(0, 5):
-            for d in range(0, 5):
-                for e in range(0, 5):
-                    if a in [b, c, d, e]:
-                        continue
-                    if b in [c, d, e]:
-                        continue
-                    if c in [d, e]:
-                        continue
-                    if d == e:
-                        continue
-                    sequence = [a, b, c, d, e]
-                    #print(sequence)
-                    output = run_amplifier(sequence)
-                    if output > max_output:
-                        print(output, max_output, sequence)
-                        max_output = output
-                        max_index = sequence
+    def run_as_far_as_possible(amplifier: intcode.Computer) -> None:
+        while True:
+            if amplifier.is_halted:
+                break
 
-print(max_output, max_index)
+            op_code, _ = intcode.Computer.opcode_parameters(amplifier.peek_next())
+
+            if op_code == intcode.Opcode.INPUT and len(data_map[amplifier.name]) == 0:
+                break
+
+            op_code = amplifier.try_do_next()
+            iterations[amplifier.name] += 1
+
+            if op_code in [intcode.Opcode.HALT]:
+                break
+
+    while True:
+
+        run_as_far_as_possible(ampA)
+        run_as_far_as_possible(ampB)
+        run_as_far_as_possible(ampC)
+        run_as_far_as_possible(ampD)
+        run_as_far_as_possible(ampE)
+
+        if not loop_back:
+            break
+
+        if all([ampA.is_halted, ampB.is_halted, ampC.is_halted, ampD.is_halted, ampE.is_halted]):
+            break
+
+    return data_map['a'][0]
+
+def run_options(options, loop_back) -> Tuple[int, List[int]]:
+    max_output = 0
+    max_index = 0
+    for sequence in itertools.permutations(options): 
+        output = run_amplifier(list(sequence), loop_back)
+        if output > max_output:
+            max_output = output
+            max_index = sequence
+    return (max_output, max_index)
+
+
+print("Part 1:", run_options([0, 1, 2, 3, 4], False))
+print("Part 2:", run_options([5, 6, 7, 8, 9], True))
