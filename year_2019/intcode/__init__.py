@@ -146,9 +146,6 @@ class Computer:
 
         instruction_value = self.get_next(ParameterMode.IMMEDIATE)
 
-        if instruction_value == 203:
-            breakpoint()
-
         opcode, parameter_modes = Computer.opcode_parameters(instruction_value)
 
         if opcode == Opcode.ADD:
