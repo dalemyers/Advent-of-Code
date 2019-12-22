@@ -34,9 +34,9 @@ def detections(grid, x, y) -> int:
             theta = math.atan2(delta_y, delta_x)
             if theta not in points_in_angle:
                 points_in_angle[theta] = []
-            points_in_angle[theta].append((h, w))
+            points_in_angle[theta].append((w, h))
 
-    return len(points_in_angle)
+    return points_in_angle
 
 
 grid = load_grid(contents)
@@ -49,11 +49,46 @@ def get_max_detections_location(grid):
         for x in range(0, len(grid[0])):
             if grid[y][x] == 0:
                 continue
-            count = detections(grid, x, y)
+            count = len(detections(grid, x, y))
             if count > max_detections:
                 max_detections = count
                 grid_location = (x, y)
 
     return grid_location, max_detections
 
-print("Part 1:", get_max_detections_location(grid))
+
+def distance(a, b, x, y) -> float:
+    c_2 = math.pow(a - x, 2) + math.pow(b - y, 2)
+    return math.sqrt(c_2)
+
+
+def vaporize(grid, location):
+    X, Y = location
+
+    locations = detections(grid, X, Y)
+
+    angles = list(locations.keys())
+    angles.sort()
+
+    for index, angle in enumerate(angles):
+        if angle >= -math.pi / 2.0:
+            angles = angles[index:] + angles[:index]
+            break
+
+    for angle in angles:
+        locations[angle].sort(key=lambda t: distance(t[0], t[1], X, Y))
+
+    counter = 0
+    while True:
+        for angle in angles:
+            try:
+                asteroid = locations.get(angle, []).pop(0)
+                counter += 1
+            except IndexError:
+                continue
+            if counter == 200:
+                return asteroid
+
+location, detection_count = get_max_detections_location(grid)
+print("Part 1:", location, detection_count)
+print("Part 2:", vaporize(grid, location))
