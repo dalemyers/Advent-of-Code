@@ -1,7 +1,10 @@
 import enum
 from typing import Dict, List
 
+from PIL import Image
+
 import intcode
+import utility
 
 class Color(enum.Enum):
     BLACK = 0
@@ -52,10 +55,12 @@ class Robot:
     painted_count: int
     output_mode: OutputMode
     orientation: Orientation
+    flip_initial_panel: bool
 
-    def __init__(self) -> None:
+    def __init__(self, flip_initial_panel = False) -> None:
         self.x = 0
         self.y = 0
+        self.flip_initial_panel = flip_initial_panel
         self.grid = {}
         self.painted_count = 0
         self.output_mode = OutputMode.COLOR
@@ -66,6 +71,9 @@ class Robot:
 
     def get_current_color(self) -> Color:
         key = self.position_key()
+        if self.flip_initial_panel:
+            self.flip_initial_panel = False
+            return Color.WHITE
         return self.grid.get(key, Color.BLACK)
 
     def handle_output(self, value) -> None:
@@ -95,36 +103,9 @@ class Robot:
         self.output_mode = self.output_mode.next_mode()
 
     def render_grid(self) -> str:
-        min_x = None
-        max_x = None
-        min_y = None
-        max_y = None
-        for key in self.grid.keys():
-            x,y = key.split("/")
-            x = int(x)
-            y = int(y)
-            if min_x == None or x < min_x:
-                min_x = x
-            if max_x == None or x > max_x:
-                max_x = x
-            if min_y == None or y < min_y:
-                min_y = y
-            if max_y == None or y > max_y:
-                max_y = y
-        output = ""
-        for y in range(min_y, max_y + 1):
-            for x in range(min_x, max_x + 1):
-                key = f"{x}/{y}"
-                try:
-                    color = self.grid[key]
-                except KeyError:
-                    color = Color.BLACK
-                if color == Color.BLACK:
-                    output += '#'
-                else:
-                    output += ' '
-            output += "\n"
-        return output
+        color_corrected = {k: 0 if v == Color.BLACK else 255 for k,v in self.grid.items()}
+        corrected_grid = utility.dict_grid_to_real(color_corrected, 1)
+        utility.render_bw_grid(corrected_grid)
 
 
 
@@ -133,14 +114,19 @@ with open("year_2019/input_11.txt") as input_file:
 
 input_values = list(map(int, contents.split(",")))
 
-def part1():
-    robot = Robot()
+def run(flip_initial_panel):
+    robot = Robot(flip_initial_panel)
     computer = intcode.Computer(program=input_values)
     computer.output_callback = lambda name, value: robot.handle_output(value)
     computer.input_callback = lambda name: robot.get_current_color().value
     computer.run()
-    print(robot.render_grid())
-    print(robot.painted_count)
+    return robot
 
+def part1():
+    print(run(False).painted_count)
+
+def part2():
+    run(True).render_grid()
 
 part1()
+part2()
