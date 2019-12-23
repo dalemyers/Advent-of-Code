@@ -1,4 +1,4 @@
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Tuple
 
 from PIL import Image
 
@@ -9,6 +9,12 @@ def chunk(input_list: List[Any], chunk_size: int) -> List[List[Any]]:
         chunks.append(input_list[i : i + chunk_size])
     return chunks
 
+
+def position_key(x: int, y: int) -> str:
+    return f"{x}/{y}"
+
+def position_from_key(key: str) -> Tuple[int, int]:
+    return tuple(map(int, key.split("/")))
 
 def render_bw_grid(grid: List[List[int]]) -> str:
 
