@@ -1,5 +1,7 @@
+from functools import reduce
+from math import gcd
 import re
-from typing import List
+from typing import List, Optional, Tuple
 
 class Moon:
 
@@ -34,6 +36,9 @@ class Moon:
     def energy(self) -> int:
         return self.potential_energy() * self.kinetic_energy()
 
+    def state_tuple(self) -> Tuple[int, int, int, int, int, int]:
+        return (self.x, self.y, self.z, self.x_v, self.y_v, self.z_v)
+
     def __repr__(self) -> str:
         return f"name={self.name}, pos=<x={self.x}, y={self.y}, z={self.z}>, vel=<x={self.x_v}, y={self.y_v}, z={self.z_v}>"
 
@@ -48,21 +53,25 @@ def compare_position(moon1, moon2) -> int:
     else:
         return -1
 
+def update_positions(all_moons: List[Moon]) -> None:
+    for moon in all_moons:
+        for other_moon in all_moons:
+            if moon is other_moon:
+                continue
+            moon.x_v += compare_position(moon.x, other_moon.x)
+            moon.y_v += compare_position(moon.y, other_moon.y)
+            moon.z_v += compare_position(moon.z, other_moon.z)
+
+    for moon in all_moons:
+        moon.update_position()
+
+
 def run_system(all_moons: List[Moon], steps: int) -> None:
     step = 1
+
     while True:
-
-        for moon in all_moons:
-            for other_moon in all_moons:
-                if moon is other_moon:
-                    continue
-                moon.x_v += compare_position(moon.x, other_moon.x)
-                moon.y_v += compare_position(moon.y, other_moon.y)
-                moon.z_v += compare_position(moon.z, other_moon.z)
-
-        for moon in all_moons:
-            moon.update_position()
-
+        update_positions(all_moons)
+        
         print(f"After {step} steps:")
         for moon in all_moons:
             print(moon)
@@ -81,6 +90,53 @@ def run_system(all_moons: List[Moon], steps: int) -> None:
     print("Total", total_energy)
 
 
+def lcm(a, b):
+    return int(a * b / gcd(a, b))
+
+def lcms(*numbers):
+    return reduce(lcm, numbers)
+
+
+def find_period(all_moons: List[Moon]) -> Optional[int]:
+    step = 1
+
+    initial_x_state = [(moon.x, moon.x_v) for moon in all_moons]
+    initial_y_state = [(moon.y, moon.y_v) for moon in all_moons]
+    initial_z_state = [(moon.z, moon.z_v) for moon in all_moons]
+
+    x_period = None
+    y_period = None
+    z_period = None
+
+    while True:
+
+        update_positions(all_moons)
+
+        if not x_period:
+            x_state = [(moon.x, moon.x_v) for moon in all_moons]
+            if x_state == initial_x_state:
+                x_period = step
+
+        if not y_period:
+            y_state = [(moon.y, moon.y_v) for moon in all_moons]
+            if y_state == initial_y_state:
+                y_period = step
+
+        if not z_period:
+            z_state = [(moon.z, moon.z_v) for moon in all_moons]
+            if z_state == initial_z_state:
+                z_period = step
+
+        if x_period and y_period and z_period:
+            break
+
+        print(f"Step {step}")
+
+        step += 1
+
+    return lcms(x_period, y_period, z_period)
+
+
 with open('year_2019/input_12.txt') as input_file:
     contents = input_file.read().strip()
 
@@ -94,4 +150,8 @@ for line in lines:
     moon = Moon(names.pop(0), int(x), int(y), int(z))
     all_moons.append(moon)
 
+# Part 1
 run_system(all_moons, 1000)
+
+# Part 2
+print("Part 2:", find_period(all_moons))
