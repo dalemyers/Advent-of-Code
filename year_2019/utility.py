@@ -31,6 +31,32 @@ def render_bw_grid(grid: List[List[int]]) -> str:
     img.show()
 
 
+def render_grid(grid: List[List[Any]], color_map: Dict[Any, Tuple[int,int,int]]) -> str:
+
+    height = len(grid)
+    width = len(grid[0])
+
+    img = Image.new('RGB', (width, height), "white")
+    pixels = img.load()
+
+    for y, row in enumerate(grid):
+        for x, pixel in enumerate(row):
+            pixels[x,y] = color_map[pixel]
+
+    img.show()
+
+
+def render_ascii(grid: List[List[Any]], ascii_map: Dict[Any, str]) -> str:
+
+    output = ""
+
+    for row in grid:
+        for pixel in row:
+            output += ascii_map[pixel]
+        output += "\n"
+
+    return output
+
 
 def dict_grid_to_real(grid: Dict[str, Any], default: Any) -> List[List[Any]]:
     min_x = None
@@ -59,9 +85,9 @@ def dict_grid_to_real(grid: Dict[str, Any], default: Any) -> List[List[Any]]:
         row = []
         for x in range(min_x, max_x + 1):
             key = f"{x}/{y}"
-            try:
+            if key in grid:
                 value = grid[key]
-            except KeyError:
+            else:
                 value = default
             row.append(value)
         output.append(row)
