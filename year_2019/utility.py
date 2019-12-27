@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 from PIL import Image
 
@@ -58,11 +58,18 @@ def render_ascii(grid: List[List[Any]], ascii_map: Dict[Any, str]) -> str:
     return output
 
 
-def dict_grid_to_real(grid: Dict[str, Any], default: Any) -> List[List[Any]]:
-    min_x = None
-    max_x = None
-    min_y = None
-    max_y = None
+def dict_grid_to_real(grid: Dict[str, Any], default: Any, minimal_bounding: Optional[Tuple[Tuple[int, int], Tuple[int, int]]] = None) -> List[List[Any]]:
+    if minimal_bounding is None:
+        min_x = None
+        max_x = None
+        min_y = None
+        max_y = None
+    else:
+        min_x = minimal_bounding[0][0]
+        max_x = minimal_bounding[0][1]
+        min_y = minimal_bounding[1][0]
+        max_y = minimal_bounding[1][1]
+
     for key in grid.keys():
         x,y = key.split("/")
         x = int(x)

@@ -167,6 +167,7 @@ class Computer:
         if opcode == Opcode.INPUT:
             assert self.input_callback is not None
             value = self.input_callback(self.name)
+            assert type(value) == int
             output_index = self.get_next(parameter_modes[0], address=True)
             self.set_value(value, output_index)
             return opcode
@@ -235,7 +236,10 @@ class Computer:
     def run(self) -> None:
 
         try:
-            while True:
-                self.do_next()
+            while self.do_next() != Opcode.HALT:
+                pass
         except HaltException:
             pass
+
+    def halt(self) -> None:
+        self.is_halted = True
