@@ -138,6 +138,22 @@ class RepairDroid:
             print(self.step_count)
 
 
+def get_open_neighbors(node, droid):
+    output = []
+    x, y = node
+
+    if droid.grid.get(utility.position_key(x-1, y)) in [Tile.TRAVERSABLE, Tile.OXYGEN, Tile.DROID]:
+        output.append((x-1, y))
+    if droid.grid.get(utility.position_key(x+1, y)) in [Tile.TRAVERSABLE, Tile.OXYGEN, Tile.DROID]:
+        output.append((x+1, y))
+    if droid.grid.get(utility.position_key(x, y-1)) in [Tile.TRAVERSABLE, Tile.OXYGEN, Tile.DROID]:
+        output.append((x, y-1))
+    if droid.grid.get(utility.position_key(x, y+1)) in [Tile.TRAVERSABLE, Tile.OXYGEN, Tile.DROID]:
+        output.append((x, y+1))
+
+    return output
+
+
 def part1(input_values) -> None:
     droid = RepairDroid(input_values)
     droid.run()
@@ -156,25 +172,10 @@ def part1(input_values) -> None:
     def distance_between(n1, n2):
         return pathfinding.distance(n1[0], n1[1], n2[0], n2[1])
 
-    def neighbors(node):
-        output = []
-        x, y = node
-
-        if droid.grid.get(utility.position_key(x-1, y)) in [Tile.TRAVERSABLE, Tile.OXYGEN]:
-            output.append((x-1, y))
-        if droid.grid.get(utility.position_key(x+1, y)) in [Tile.TRAVERSABLE, Tile.OXYGEN]:
-            output.append((x+1, y))
-        if droid.grid.get(utility.position_key(x, y-1)) in [Tile.TRAVERSABLE, Tile.OXYGEN]:
-            output.append((x, y-1))
-        if droid.grid.get(utility.position_key(x, y+1)) in [Tile.TRAVERSABLE, Tile.OXYGEN]:
-            output.append((x, y+1))
-
-        return output
-
     results = astar.find_path(
         start,
         end,
-        neighbors,
+        lambda node: get_open_neighbors(node, droid),
         distance_between_fnct=distance_between,
         heuristic_cost_estimate_fnct=distance_between
     )
@@ -189,6 +190,34 @@ def part1(input_values) -> None:
     print("Part 1:", len(result_path) - 1)
 
 
+def part2(input_values) -> None:
+    droid = RepairDroid(input_values)
+    droid.run()
+
+    for key, value in droid.grid.items():
+        if value != Tile.OXYGEN:
+            continue
+        oxygen = utility.position_from_key(key)
+        break
+
+    assert oxygen is not None
+
+    iteration_count = 0
+    next_iteration = [oxygen]
+    while len(next_iteration) > 0:
+        iteration_count += 1
+        buffer = []
+        for cell in next_iteration:
+            neighbors = get_open_neighbors(cell, droid)
+            for neighbor in neighbors:
+                if droid.grid.get(utility.position_key(neighbor[0], neighbor[1]), Tile.UNEXPLORED) in [Tile.TRAVERSABLE, Tile.DROID]:
+                    buffer.append(neighbor)
+        for cell in next_iteration:
+            droid.grid[utility.position_key(cell[0], cell[1])] = Tile.OXYGEN
+        next_iteration = buffer
+
+    print("Part 2:", iteration_count - 1)
+
 
 with open("year_2019/input_15.txt") as input_file:
     contents = input_file.read()
@@ -196,3 +225,4 @@ with open("year_2019/input_15.txt") as input_file:
 input_values = list(map(int, contents.split(",")))
 
 part1(input_values)
+part2(input_values)
