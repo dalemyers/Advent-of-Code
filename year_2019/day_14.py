@@ -80,20 +80,35 @@ def create_material(material_to_create: str, count_required: int, spares: Dict[s
 
     return total_ore
 
-def make_fuel():
-    with open("year_2019/input_14.txt") as input_file:
+
+with open("year_2019/input_14.txt") as input_file:
         contents = input_file.read().strip()
 
-    all_reactions = {reaction.output.name: reaction for reaction in [Reaction.from_input_line(line) for line in contents.split("\n")]}
+all_reactions = {reaction.output.name: reaction for reaction in [Reaction.from_input_line(line) for line in contents.split("\n")]}
 
-    fuel_reaction = all_reactions["FUEL"]
+def part1():
+    ore_per_unit_fuel = create_material("FUEL", 1, collections.defaultdict(lambda: 0), all_reactions)
+    print("Part 1:", ore_per_unit_fuel)
 
-    count = 0
-    spares = collections.defaultdict(lambda: 0)
+def part2():
+    ONE_TRILLION = 1_000_000_000_000
 
-    for material in fuel_reaction.inputs:
-        count += create_material(material.name, material.count, spares, all_reactions)
+    fuel_count_high = ONE_TRILLION
+    fuel_count_low = 1
 
-    print("TOTAL:", count)
+    while True:
+        fuel_count_mid = int((fuel_count_high + fuel_count_low) / 2)
+        ore_count_mid = create_material("FUEL", fuel_count_mid, collections.defaultdict(lambda: 0), all_reactions)
 
-make_fuel()
+        if ore_count_mid > ONE_TRILLION:
+            fuel_count_high = fuel_count_mid
+        elif ore_count_mid < ONE_TRILLION:
+            fuel_count_low = fuel_count_mid
+
+        if fuel_count_high - fuel_count_low <= 1:
+            break
+
+    print("Part 2:", fuel_count_low)
+
+part1()
+part2()
