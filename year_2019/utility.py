@@ -17,6 +17,18 @@ def position_key(x: int, y: int) -> str:
 def position_from_key(key: str) -> Tuple[int, int]:
     return tuple(map(int, key.split("/")))
 
+
+def scale_grid(grid: List[List[Any]], scale: int) -> List[List[Any]]:
+    output = []
+    for row in grid:
+        new_row = []
+        for pixel in row:
+            new_row.extend([pixel] * scale)
+        for _ in range(scale):
+            output.append(new_row)
+    return output
+
+
 def render_bw_grid(grid: List[List[int]]) -> str:
 
     height = len(grid)
@@ -47,13 +59,16 @@ def render_grid(grid: List[List[Any]], color_map: Dict[Any, Tuple[int,int,int]])
     img.show()
 
 
-def render_ascii(grid: List[List[Any]], ascii_map: Dict[Any, str]) -> str:
+def render_ascii(grid: List[List[Any]], ascii_map: Optional[Dict[Any, str]] = None) -> str:
 
     output = ""
 
     for row in grid:
         for pixel in row:
-            output += ascii_map[pixel]
+            if ascii_map:
+                output += ascii_map[pixel]
+            else:
+                output += pixel
         output += "\n"
 
     return output
