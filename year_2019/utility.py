@@ -1,3 +1,4 @@
+import time
 from typing import Any, Dict, List, Optional, Tuple
 
 from PIL import Image
@@ -100,3 +101,23 @@ def dict_grid_to_real(grid: Dict[str, Any], default: Any, minimal_bounding: Opti
         output.append(row)
 
     return output
+
+
+class Stopwatch(object):
+
+    name: str
+    start: Optional[time.time]
+    emd: Optional[time.time]
+
+    def __init__(self, name: str) -> None:
+        self.name = name
+        self.start = None
+        self.end = None
+
+    def __enter__(self):
+        self.start = time.time()
+
+    def __exit__(self, type, value, traceback):
+        self.end = time.time()
+
+        print(f"{self.name}: {self.end - self.start}")

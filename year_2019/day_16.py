@@ -1,50 +1,66 @@
+from itertools import accumulate, islice
 import math
-from typing import Any, List
-
-def rotate_list(input_list: List[Any], by_count: int) -> List[Any]:
-    return input_list[by_count:] + input_list[:by_count]
-
-def rotate_left(input_list: List[Any]) -> List[Any]:
-    return rotate_list(input_list, 1)
-
-def rotate_right(input_list: List[Any]) -> List[Any]:
-    return rotate_list(input_list, -1)
-
+from typing import Any, Iterator, List
+import utility
 
 BASE_PATTERN = [0, 1, 0, -1]
 
-def run_pass(input_values: List[int]) -> List:
+def generate_pattern(count, offset) -> Iterator[int]:
+    index = math.floor(offset / count)
+    offset_remainder = offset - (index * 4) + 1
+    while True:
+        index = index % 4
+        for _ in range(offset_remainder, count):
+            yield BASE_PATTERN[index]
+        offset_remainder = 0
+        index += 1
+
+def run_pass(input_values: List[int]) -> List[int]:
     output = []
 
     for pass_index in range(0, len(input_values)):
-
-        pattern = []
-        for element in BASE_PATTERN:
-            for i in range(0, pass_index + 1):
-                pattern.append(element)
-
-        extended_pattern = pattern * math.ceil(len(input_values) / len(pattern))
-        extended_pattern = extended_pattern[1:]
-
-        pairs = zip(input_values, extended_pattern)
+        pairs = zip(
+            input_values[pass_index:], 
+            generate_pattern(pass_index + 1, pass_index)
+        )
         total = 0
+        outputs = []
         for a, b in pairs:
+            outputs.append(f"{a}*{b:<2}")
             total += a * b
         result = abs(total) % 10
-        output.append(result)
+        #print(" + ".join(outputs) + f" = {result}")
+        yield result
 
-    return output
 
 with open("year_2019/input_16.txt") as input_file:
     contents = input_file.read().strip()
 
 input_values = list(map(int, [character for character in contents]))
 
-
+# Part 1
 values = input_values[:]
 for i in range(0, 100):
-    values = run_pass(values[:])
-    print("".join(map(str, values[:8])))
+    values = list(run_pass(values))
+print("Part 1:", "".join(map(str, values[:8])))
 
+
+# Part 2
+input_values = input_values * 10_000
+values = list(reversed(input_values))
+offset = int("".join(map(str, input_values[:7])))
+
+for i in range(0, 100):
+    values = list(
+        islice(
+            accumulate(
+                values,
+                lambda a,b: (a + b) % 10
+            ), 
+            len(input_values) - offset
+        )
+    )
+
+print("Part 2:", "".join(map(str, list(reversed(values))[:8])))
 
 
