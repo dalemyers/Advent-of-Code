@@ -1,3 +1,15 @@
 {
+    "files.exclude": {
+        "**/*.pyc": true,
+        "**/.vscode/**": true,
+        "**/__pycache__/**": true,
+        "**/.pytest_cache/**": true,
+        "**/.mypy_cache/**": true,
+        "Include/**": true,
+        "Lib/**": true,
+        "Scripts/**": true,
+        "pip-selfcheck.json": true,
+        "pyvenv.cfg": true,
+    },
     "python.pythonPath": "Scripts\\python.exe"
 }
