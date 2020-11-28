@@ -12,3 +12,13 @@ for character in contents:
 
 print("Part 1:", floor)
 
+floor = 0
+for index, character in enumerate(contents):
+    if character == "(":
+        floor += 1
+    elif character == ")":
+        floor -= 1
+    if floor == -1:
+        print("Part 2:", index + 1)
+        break
+
