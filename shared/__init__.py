@@ -1,5 +1,10 @@
 from typing import Any, List
 
+def read_file_lines(path):
+    with open(path) as input_file:
+        contents = input_file.readlines()
+    return [c.strip() for c in contents]
+
 def create_int_grid(width: int, height: int, default: int = 0):
     return [[default for x in range(width)] for y in range(height)]
 
