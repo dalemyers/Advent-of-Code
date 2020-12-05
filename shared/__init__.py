@@ -1,5 +1,8 @@
 from typing import Any, List
 
+from PIL import Image
+
+
 def read_file_lines(path):
     with open(path) as input_file:
         contents = input_file.readlines()
@@ -37,3 +40,18 @@ def find_locations(input_list: List[Any], value: List[Any]) -> List[int]:
         if value == input_range:
             locations.append(start_index)
     return locations
+
+
+def render_bw_grid(grid: List[List[bool]]) -> str:
+
+    height = len(grid)
+    width = len(grid[0])
+
+    img = Image.new('L', (width, height), "black")
+    pixels = img.load()
+
+    for y, row in enumerate(grid):
+        for x, pixel in enumerate(row):
+            pixels[x,y] = 255 if pixel else 0
+
+    img.show()
