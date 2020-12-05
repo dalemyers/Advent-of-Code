@@ -63,7 +63,7 @@ def check_abba(string):
     return False
 
 def find_abas(value):
-    pattern = re.compile(r"(.)(.)\1")
+    pattern = re.compile(r"(?=(.)(.)\1)")
 
     results = []
 
@@ -82,6 +82,9 @@ def has_ssl(ip):
     for sequence in normals:
         locations = find_abas(sequence)
 
+        found = False
+        has_pattern = False
+
         for pattern, span in locations:
             if pattern[0] == pattern[1]:
                 continue
@@ -89,20 +92,11 @@ def has_ssl(ip):
             # Reversed pattern
             new_pattern = pattern[1] + pattern[0] + pattern[1]
 
-            found = False
             for hseq in hypernets:
                 if new_pattern in hseq:
-                    found = True
-                    break
+                    return True
 
-            if not found:
-                is_invalid = True
-                break
-
-        if is_invalid:
-            break
-
-    return not is_invalid
+    return False
 
 
 def part1():
@@ -137,18 +131,6 @@ def part2():
             count += 1
 
     return count
-
-
-tests = [
-("zazbz[bzb]cdb", True),
-("aba[bab]xyz", True),
-("xyx[xyx]xyx", False),
-("aaa[kek]eke", True),
-]
-
-for ip_str, result in tests:
-    sequences = parse_ip(ip_str)
-    assert has_ssl(sequences) == result
 
 
 print("Part 1:", part1())
