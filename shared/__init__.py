@@ -1,4 +1,4 @@
-from typing import Any, List
+from typing import Any, Iterable, List
 
 from PIL import Image
 
@@ -55,3 +55,10 @@ def render_bw_grid(grid: List[List[bool]]) -> str:
             pixels[x,y] = 255 if pixel else 0
 
     img.show()
+
+
+def product(iterable: Iterable) -> Any:
+    value = 1
+    for i in iterable:
+        value = value * i
+    return value
