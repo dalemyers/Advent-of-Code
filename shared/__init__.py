@@ -66,12 +66,17 @@ def product(iterable: Iterable) -> Any:
         value = value * i
     return value
 
+def print_raw_grid(grid):
+    for row in grid:
+        print("".join(row))
+    print()
+
+
 def print_grid(grid):
     for row in grid:
         text = ["#" if v else "." for v in row]
         print("".join(text))
     print()
-
 
 def print_grid_3d_dict(grid):
     plane_indices = sorted(list(grid.keys()))
