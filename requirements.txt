@@ -1,4 +1,4 @@
 astar==0.9
-pillow==8.2.0
+pillow==8.3.2
 regex==2020.11.13
 rich==9.5.1
