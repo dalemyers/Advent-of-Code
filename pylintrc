@@ -1,0 +1,48 @@
+[MASTER]
+
+# Use multiple processes to speed up Pylint.
+jobs=4
+
+# Require full doc comments
+# Require the correct doc comment style
+# Avoid compare to empty string
+# Avoid overlapping exceptions
+load-plugins=pylint.extensions.docparams,pylint.extensions.docstyle,pylint.extensions.emptystring,pylint.extensions.overlapping_exceptions,pylint.extensions.redefined_variable_type
+
+# pylint.extensions.docparams options
+accept-no-param-doc=no
+accept-no-raise-doc=no
+accept-no-return-doc=no
+accept-no-yeilds-doc=no
+
+[MESSAGES CONTROL]
+
+# C0413 wrong-import-position: Import “%s” should be placed at the top of the module Used when code and imports are mixed
+# C1801 len-as-condition: Do not use `len(SEQUENCE)` as condition value
+# R0801 duplicate-code: Similar lines in multiple locations
+# R0911 too-many-return-statements: Too many return statements
+# W0511 fixme: TODO statements
+# W1201 logging-not-lazy: Specify string format arguments as logging function parameters
+# W1202 logging-format-interpolation: Use % formatting in logging functions and pass the % parameters as arguments
+# W1203 logging-fstring-interpolation: Use % formatting in logging functions and pass the % parameters as arguments
+disable=C0413,C1801,R0801,R0911,W0511,W1201,W1202,W1203
+
+[BASIC]
+
+# Good variable names which should always be accepted, separated by a comma
+good-names=f,i,j,k,ex
+
+[DESIGN]
+
+# Not everything needs to have methods. Python prefers named tuples over classes
+# but classes give more flexibility in the future.
+min-public-methods=0
+
+[FORMAT]
+
+# We should aim to stick below 120, but it's not always possible, and makes the 
+# code look uglier in a lot of cases
+max-line-length=200
+
+# Expected format of line ending, e.g. empty (any line ending), LF or CRLF.
+expected-line-ending-format=LF

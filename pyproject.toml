@@ -1,0 +1,33 @@
+[tool.poetry]
+name = "aoc"
+version = "0.0.1"
+description = "Advent of Code"
+
+license = "MIT"
+
+authors = [
+    "Dale Myers <dalemy@microsoft.com>"
+]
+
+readme = 'README.md'
+
+repository = "https://github.com/dalemyers/Advent-of-Code"
+homepage = "https://github.com/dalemyers/Advent-of-Code"
+
+keywords = ['advent', 'code', 'aoc']
+
+[tool.poetry.dependencies]
+python = "^3.9.0"
+astar = "=0.9"
+pillow = "^8.0"
+
+[tool.poetry.dev-dependencies]
+black = "=21.11b1"
+mypy = "=0.910"
+pylint = "=2.12.1"
+pytest = "=6.2.5"
+
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
