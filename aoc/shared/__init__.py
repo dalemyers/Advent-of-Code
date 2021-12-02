@@ -5,7 +5,9 @@ from PIL import Image
 
 
 def read_file_lines(path):
-    with open(path) as input_file:
+    base_path = os.path.dirname(__file__)
+    aoc_path = os.path.abspath(os.path.join(base_path, ".."))
+    with open(os.path.join(aoc_path, path), encoding="utf-8") as input_file:
         contents = input_file.readlines()
     return [c.strip() for c in contents]
 
