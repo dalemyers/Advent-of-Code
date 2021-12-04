@@ -1,57 +1,31 @@
 """Day 4"""
 
-from typing import List, Tuple
-from aoc.shared import read_file_lines
-
-
-class Cell:
-    """Cell on a bingo board."""
-
-    marked: bool
-
-    def __init__(self, value: int) -> None:
-        self.value = value
-        self.marked = False
-
-    def mark(self) -> None:
-        self.marked = True
-
-    def __str__(self) -> str:
-        if self.marked:
-            return f"({self.value})"
-        else:
-            return f" {self.value} "
-
-    def __repr__(self) -> str:
-        return str(self)
+from typing import List, Optional, Tuple
+from aoc.shared import read_file_lines, transpose
 
 
 class Board:
-    def __init__(self, cells: List[List[Cell]]) -> None:
+    def __init__(self, cells: List[List[Optional[int]]]) -> None:
         self.cells = cells
 
     def mark(self, value: int) -> None:
-        for row in self.cells:
-            for cell in row:
-                if cell.value == value:
-                    cell.mark()
+        for y, row in enumerate(self.cells):
+            for x, v in enumerate(row):
+                if value == v:
+                    self.cells[y][x] = None
                     return
 
     def has_win(self) -> bool:
-        for row in self.cells:
-            if all([cell.marked for cell in row]):
+        for row in self.cells + transpose(self.cells):
+            if all(cell is None for cell in row):
                 return True
-
-        for row in list(map(list, zip(*self.cells))):
-            if all([cell.marked for cell in row]):
-                return True
+        return False
 
     @staticmethod
     def from_values(values: List[str]) -> "Board":
         rows = []
         for row in values:
-            numbers = [Cell(int(x)) for x in row.split(" ") if len(x.strip()) > 0]
-            rows.append(numbers)
+            rows.append([int(x) for x in row.split(" ") if len(x.strip()) > 0])
         return Board(rows)
 
 
@@ -97,10 +71,7 @@ def part1() -> int:
 
     total = 0
     for row in winning_board.cells:
-        for cell in row:
-            if cell.marked:
-                continue
-            total += cell.value
+        total += sum(v for v in row if v is not None)
 
     return total * winning_call
 
@@ -119,7 +90,7 @@ def part2() -> int:
             if board.has_win():
                 winning_boards.append(index)
 
-        if len(boards) == 1 and boards[0].has_win():
+        if len(boards) == 1 and len(winning_boards):
             winning_call = call
             break
 
@@ -133,10 +104,7 @@ def part2() -> int:
 
     total = 0
     for row in boards[0].cells:
-        for cell in row:
-            if cell.marked:
-                continue
-            total += cell.value
+        total += sum(v for v in row if v is not None)
 
     return total * winning_call
 

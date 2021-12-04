@@ -118,3 +118,7 @@ def print_grid_3d(grid, z_start):
             print("".join(row))
         print()
     print()
+
+
+def transpose(values: List[List[Any]]) -> List[List[Any]]:
+    return list(map(list, zip(*values)))
