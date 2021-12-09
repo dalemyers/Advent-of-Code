@@ -36,3 +36,10 @@ def test_day_05():
 
     assert day_05.part1() == 5169
     assert day_05.part2() == 22083
+
+
+def test_day_06():
+    """Test day 06."""
+
+    assert day_06.part1() == 352872
+    assert day_06.part2() == 1604361182149

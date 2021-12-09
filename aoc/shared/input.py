@@ -16,3 +16,11 @@ def read_ints_from_file(path: str) -> List[int]:
     with open(os.path.join(aoc_path, path), encoding="utf-8") as f:
         input_data = f.readlines()
     return list(map(int, input_data))
+
+
+def read_int_comma_separated_from_file(path: str) -> List[int]:
+    base_path = os.path.dirname(__file__)
+    aoc_path = os.path.abspath(os.path.join(base_path, ".."))
+    with open(os.path.join(aoc_path, path), encoding="utf-8") as f:
+        input_data = f.read().strip()
+    return list(map(int, input_data.split(",")))
