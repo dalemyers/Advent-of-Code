@@ -2,6 +2,7 @@ from typing import Any, Iterable, List
 
 from .grids import *
 from .input import *
+from .maths import *
 
 
 def is_int(value) -> bool:
