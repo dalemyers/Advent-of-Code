@@ -9,3 +9,4 @@ from aoc.year_2021 import day_06
 from aoc.year_2021 import day_07
 from aoc.year_2021 import day_08
 from aoc.year_2021 import day_09
+from aoc.year_2021 import day_10
