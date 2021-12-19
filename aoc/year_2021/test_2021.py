@@ -78,3 +78,10 @@ def test_day_11():
 
     assert day_11.part1() == 1571
     assert day_11.part2() == 387
+
+
+def test_day_12():
+    """Test day 12."""
+
+    assert day_12.part1() == 4167
+    assert day_12.part2() == 98441
