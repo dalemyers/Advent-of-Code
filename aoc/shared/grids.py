@@ -1,4 +1,4 @@
-from typing import List
+from typing import Any, List, Tuple
 
 from PIL import Image
 
@@ -36,10 +36,16 @@ def print_raw_grid(grid):
     print()
 
 
-def print_grid(grid):
+def print_full_empty_grid(grid):
     for row in grid:
         text = ["#" if v else "." for v in row]
         print("".join(text))
+    print()
+
+
+def print_small_int_grid(grid):
+    for row in grid:
+        print("".join([str(v) for v in row]))
     print()
 
 
@@ -69,3 +75,32 @@ def print_grid_3d(grid, z_start):
             print("".join(row))
         print()
     print()
+
+
+def get_surrounding_points(
+    y: int, x: int, grid: List[List[Any]], diagonals: bool = False
+) -> List[Tuple[int, int]]:
+    points = []
+
+    if y - 1 >= 0:
+        points.append((y - 1, x))
+    if y + 1 < len(grid):
+        points.append((y + 1, x))
+    if x - 1 >= 0:
+        points.append((y, x - 1))
+    if x + 1 < len(grid[0]):
+        points.append((y, x + 1))
+
+    if not diagonals:
+        return points
+
+    if y - 1 >= 0 and x - 1 >= 0:
+        points.append((y - 1, x - 1))
+    if y + 1 < len(grid) and x + 1 < len(grid[0]):
+        points.append((y + 1, x + 1))
+    if y - 1 >= 0 and x + 1 < len(grid[0]):
+        points.append((y - 1, x + 1))
+    if y + 1 < len(grid) and x - 1 >= 0:
+        points.append((y + 1, x - 1))
+
+    return points
