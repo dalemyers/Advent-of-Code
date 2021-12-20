@@ -1,4 +1,4 @@
-from typing import Any, List, Tuple
+from typing import Any, List, Optional, Tuple
 
 from PIL import Image
 
@@ -78,17 +78,29 @@ def print_grid_3d(grid, z_start):
 
 
 def get_surrounding_points(
-    y: int, x: int, grid: List[List[Any]], diagonals: bool = False
+    y: int,
+    x: int,
+    grid: List[List[Any]],
+    *,
+    diagonals: bool = False,
+    height: Optional[int] = None,
+    width: Optional[int] = None,
 ) -> List[Tuple[int, int]]:
     points = []
 
+    if height is None:
+        height = len(grid)
+
+    if width is None:
+        width = len(grid[0])
+
     if y - 1 >= 0:
         points.append((y - 1, x))
-    if y + 1 < len(grid):
+    if y + 1 < height:
         points.append((y + 1, x))
     if x - 1 >= 0:
         points.append((y, x - 1))
-    if x + 1 < len(grid[0]):
+    if x + 1 < width:
         points.append((y, x + 1))
 
     if not diagonals:
@@ -96,11 +108,11 @@ def get_surrounding_points(
 
     if y - 1 >= 0 and x - 1 >= 0:
         points.append((y - 1, x - 1))
-    if y + 1 < len(grid) and x + 1 < len(grid[0]):
+    if y + 1 < height and x + 1 < width:
         points.append((y + 1, x + 1))
-    if y - 1 >= 0 and x + 1 < len(grid[0]):
+    if y - 1 >= 0 and x + 1 < width:
         points.append((y - 1, x + 1))
-    if y + 1 < len(grid) and x - 1 >= 0:
+    if y + 1 < height and x - 1 >= 0:
         points.append((y + 1, x - 1))
 
     return points
