@@ -41,3 +41,22 @@ def read_int_grid_file(path: str) -> List[List[int]]:
         output.append(output_line)
 
     return output
+
+
+def read_chunked_ints(path: str) -> List[List[int]]:
+    base_path = os.path.dirname(__file__)
+    aoc_path = os.path.abspath(os.path.join(base_path, ".."))
+    with open(os.path.join(aoc_path, path), encoding="utf-8") as input_file:
+        contents = input_file.readlines()
+
+    chunks = []
+    chunk = []
+    for line in contents:
+        if len(line.strip()) == 0:
+            chunks.append(chunk)
+            chunk = []
+            continue
+
+        chunk.append(int(line))
+
+    return chunks

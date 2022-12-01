@@ -27,6 +27,8 @@ for filename in os.listdir(latest_year_path):
 
     days.append(int(filename[len("day_") :], 10))
 
+days.append(0)
+
 latest_day = sorted(days)[-1]
 
 latest_day_path = os.path.join(latest_year_path, f"day_{latest_day:02}.py")
