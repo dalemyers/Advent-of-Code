@@ -1,5 +1,4 @@
-import enum
-from shared import read_file_lines, create_bool_grid, render_bw_grid
+from shared import read_file_lines
 
 contents = read_file_lines("year_2016/input_09.txt")
 contents = contents[0].strip()
@@ -160,7 +159,9 @@ def part2():
     assert decompress4("(3x3)XYZ") == 9
     assert decompress4("X(8x2)(3x3)ABCY") == 20
     assert decompress4("(27x12)(20x12)(13x14)(7x10)(1x12)A") == 241920
-    assert decompress4("(25x3)(3x3)ABC(2x3)XY(5x2)PQRSTX(18x9)(3x2)TWO(5x7)SEVEN") == 445
+    assert (
+        decompress4("(25x3)(3x3)ABC(2x3)XY(5x2)PQRSTX(18x9)(3x2)TWO(5x7)SEVEN") == 445
+    )
     return decompress4(contents)
 
 

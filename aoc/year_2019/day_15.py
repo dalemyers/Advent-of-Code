@@ -1,6 +1,5 @@
 import enum
-import random
-from typing import Callable, Dict, List, Optional, Tuple
+from typing import Dict, List, Optional
 
 import astar
 
@@ -61,7 +60,7 @@ class RepairDroid:
     def run(self) -> None:
         self.computer.run()
 
-    def get_input(self, name: str) -> int:
+    def get_input(self, _: str) -> int:
         self.step_count += 1
 
         if self.step_count > 5000:
@@ -91,7 +90,7 @@ class RepairDroid:
         else:
             self.next_direction = clockwise_movement[self.last_move]
 
-    def droid_move(self, name: str, value: int) -> None:
+    def droid_move(self, _: str, value: int) -> None:
         status = DroidStatus(value)
 
         self.calculate_next_direction(status)
@@ -108,7 +107,10 @@ class RepairDroid:
 
             return
 
-        if self.grid.get(utility.position_key(self.x, self.y), Tile.UNEXPLORED) != Tile.OXYGEN:
+        if (
+            self.grid.get(utility.position_key(self.x, self.y), Tile.UNEXPLORED)
+            != Tile.OXYGEN
+        ):
             self.grid[utility.position_key(self.x, self.y)] = Tile.TRAVERSABLE
 
         if status == DroidStatus.MOVED_STEP_AT_OXYGEN:
@@ -130,13 +132,18 @@ class RepairDroid:
         elif self.last_move == Movement.WEST:
             self.x -= 1
 
-        if self.grid.get(utility.position_key(self.x, self.y), Tile.UNEXPLORED) != Tile.OXYGEN:
+        if (
+            self.grid.get(utility.position_key(self.x, self.y), Tile.UNEXPLORED)
+            != Tile.OXYGEN
+        ):
             self.grid[utility.position_key(self.x, self.y)] = Tile.DROID
 
     def render(self, force: bool = False):
         if not force and self.step_count % 1000 != 0:
             return
-        grid_list = utility.dict_grid_to_real(self.grid, Tile.UNEXPLORED, ((-10, 10), (-10, 10)))
+        grid_list = utility.dict_grid_to_real(
+            self.grid, Tile.UNEXPLORED, ((-10, 10), (-10, 10))
+        )
         print(utility.render_ascii(grid_list, {value: value.value for value in Tile}))
         if not force:
             print(self.step_count)
@@ -241,10 +248,10 @@ def part2(input_values) -> None:
     print("Part 2:", iteration_count - 1)
 
 
-with open("year_2019/input_15.txt") as input_file:
+with open("year_2019/input_15.txt", encoding="utf-8") as input_file:
     contents = input_file.read()
 
-input_values = list(map(int, contents.split(",")))
+all_input_values = list(map(int, contents.split(",")))
 
-part1(input_values)
-part2(input_values)
+part1(all_input_values)
+part2(all_input_values)

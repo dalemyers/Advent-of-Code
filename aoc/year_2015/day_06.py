@@ -1,6 +1,6 @@
 from shared import create_bool_grid, create_int_grid
 
-with open("year_2015/input_06.txt") as f:
+with open("year_2015/input_06.txt", encoding="utf-8") as f:
     contents = f.read()
 
 bool_grid = create_bool_grid(1000, 1000)
@@ -33,7 +33,7 @@ brightness_count = 0
 for y in range(1000):
     for x in range(1000):
         brightness_count += int_grid[y][x]
-        if bool_grid[y][x] == True:
+        if bool_grid[y][x]:
             light_count += 1
 
 print("Part 1:", light_count)

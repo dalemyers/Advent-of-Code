@@ -3,7 +3,7 @@ from typing import List, Tuple
 
 import intcode
 
-with open("year_2019/input_07.txt") as input_file:
+with open("year_2019/input_07.txt", encoding="utf-8") as input_file:
     contents = input_file.read()
 
 input_values = list(map(int, contents.split(",")))
@@ -28,11 +28,11 @@ def run_amplifier(inputs: List[int], loop_back: bool = False) -> int:
     def append(key, value):
         data_map[key].append(value)
 
-    ampA.output_callback = lambda name, value: append("b", value)
-    ampB.output_callback = lambda name, value: append("c", value)
-    ampC.output_callback = lambda name, value: append("d", value)
-    ampD.output_callback = lambda name, value: append("e", value)
-    ampE.output_callback = lambda name, value: append("a", value)
+    ampA.output_callback = lambda _, value: append("b", value)
+    ampB.output_callback = lambda _, value: append("c", value)
+    ampC.output_callback = lambda _, value: append("d", value)
+    ampD.output_callback = lambda _, value: append("e", value)
+    ampE.output_callback = lambda _, value: append("a", value)
 
     ampA.input_callback = lambda name: data_map[name].pop(0)
     ampB.input_callback = lambda name: data_map[name].pop(0)

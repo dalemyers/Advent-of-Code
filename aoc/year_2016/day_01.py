@@ -1,5 +1,4 @@
 import enum
-import math
 
 
 class Direction(enum.Enum):
@@ -12,25 +11,23 @@ class Direction(enum.Enum):
     def right(self):
         if self == Direction.north:
             return Direction.east
-        elif self == Direction.east:
+        if self == Direction.east:
             return Direction.south
-        elif self == Direction.south:
+        if self == Direction.south:
             return Direction.west
-        else:
-            return Direction.north
+        return Direction.north
 
     def left(self):
         if self == Direction.north:
             return Direction.west
-        elif self == Direction.west:
+        if self == Direction.west:
             return Direction.south
-        elif self == Direction.south:
+        if self == Direction.south:
             return Direction.east
-        else:
-            return Direction.north
+        return Direction.north
 
 
-with open("year_2016/input_01.txt") as f:
+with open("year_2016/input_01.txt", encoding="utf-8") as f:
     contents = f.read()
 
 commands = contents.strip().split(", ")

@@ -3,7 +3,7 @@ import json
 from shared import is_int
 
 
-with open("year_2015/input_12.txt") as f:
+with open("year_2015/input_12.txt", encoding="utf-8") as f:
     input_data = json.load(f)
 
 
@@ -28,12 +28,11 @@ def part1():
     def calc(data):
         if is_int(data):
             return int(data)
-        elif isinstance(data, list):
+        if isinstance(data, list):
             return calc_array(data)
-        elif isinstance(data, dict):
+        if isinstance(data, dict):
             return calc_dictionary(data)
-        else:
-            return 0
+        return 0
 
     return calc(input_data)
 
@@ -70,10 +69,9 @@ def part2():
         try:
             if isinstance(data, list):
                 return calc_array(data)
-            elif isinstance(data, dict):
+            if isinstance(data, dict):
                 return calc_dictionary(data)
-            else:
-                return 0
+            return 0
         except RedException:
             return 0
 

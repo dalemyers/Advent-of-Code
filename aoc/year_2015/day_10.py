@@ -1,7 +1,3 @@
-import itertools
-import sys
-
-
 def solve(iterations):
     input_value = "1113122113"
 

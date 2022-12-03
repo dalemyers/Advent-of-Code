@@ -1,6 +1,5 @@
 import enum
-import itertools
-from typing import List, Tuple
+from typing import List
 
 
 WIDTH = 25
@@ -52,7 +51,9 @@ def part1():
             min_count = count
             min_layer = layer
 
-    return count_colors(min_layer, Color.WHITE) * count_colors(min_layer, Color.TRANSPARENT)
+    return count_colors(min_layer, Color.WHITE) * count_colors(
+        min_layer, Color.TRANSPARENT
+    )
 
 
 def flatten_layers(layers):
@@ -82,15 +83,15 @@ def render_image(image):
         print("\n", sep="", end="")
 
 
-with open("year_2019/input_08.txt") as input_file:
+with open("year_2019/input_08.txt", encoding="utf-8") as input_file:
     contents = input_file.read().strip()
 
 values = list(map(int, contents))
-layers = generate_layers(values)
+all_layers = generate_layers(values)
 
 print("Part 1:", part1())
 
-full_image = flatten_layers(layers)
+full_image = flatten_layers(all_layers)
 print("Part 2:")
 render_image(full_image)
 print()

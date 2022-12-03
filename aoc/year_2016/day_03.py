@@ -1,8 +1,4 @@
-import enum
-import math
-
-
-with open("year_2016/input_03.txt") as f:
+with open("year_2016/input_03.txt", encoding="utf-8") as f:
     contents = f.readlines()
 
 triangles = []

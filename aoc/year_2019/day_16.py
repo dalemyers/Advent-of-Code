@@ -1,7 +1,6 @@
 from itertools import accumulate, islice
 import math
-from typing import Any, Iterator, List
-import utility
+from typing import Iterator, List
 
 BASE_PATTERN = [0, 1, 0, -1]
 
@@ -18,10 +17,10 @@ def generate_pattern(count, offset) -> Iterator[int]:
 
 
 def run_pass(input_values: List[int]) -> List[int]:
-    output = []
-
     for pass_index in range(0, len(input_values)):
-        pairs = zip(input_values[pass_index:], generate_pattern(pass_index + 1, pass_index))
+        pairs = zip(
+            input_values[pass_index:], generate_pattern(pass_index + 1, pass_index)
+        )
         total = 0
         outputs = []
         for a, b in pairs:
@@ -32,24 +31,28 @@ def run_pass(input_values: List[int]) -> List[int]:
         yield result
 
 
-with open("year_2019/input_16.txt") as input_file:
+with open("year_2019/input_16.txt", encoding="utf-8") as input_file:
     contents = input_file.read().strip()
 
-input_values = list(map(int, [character for character in contents]))
+all_input_values = list(map(int, [character for character in contents]))
 
 # Part 1
-values = input_values[:]
+values = all_input_values[:]
 for i in range(0, 100):
     values = list(run_pass(values))
 print("Part 1:", "".join(map(str, values[:8])))
 
 
 # Part 2
-input_values = input_values * 10_000
-values = list(reversed(input_values))
-offset = int("".join(map(str, input_values[:7])))
+all_input_values = all_input_values * 10_000
+values = list(reversed(all_input_values))
+offset = int("".join(map(str, all_input_values[:7])))
 
 for i in range(0, 100):
-    values = list(islice(accumulate(values, lambda a, b: (a + b) % 10), len(input_values) - offset))
+    values = list(
+        islice(
+            accumulate(values, lambda a, b: (a + b) % 10), len(all_input_values) - offset
+        )
+    )
 
 print("Part 2:", "".join(map(str, list(reversed(values))[:8])))

@@ -1,6 +1,3 @@
-import itertools
-import sys
-
 password = list("cqjxjnds")
 
 printed = 0

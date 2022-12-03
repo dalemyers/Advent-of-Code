@@ -1,6 +1,6 @@
 import intcode
 
-with open("year_2019/input_02.txt") as f:
+with open("year_2019/input_02.txt", encoding="utf-8") as f:
     full_input = f.read().strip()
 
 

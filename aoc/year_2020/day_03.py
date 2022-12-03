@@ -24,7 +24,7 @@ def extend(input_trees, x_delta, y_delta):
     return output
 
 
-with open("year_2020/input_03.txt") as input_file:
+with open("year_2020/input_03.txt", encoding="utf-8") as input_file:
     contents = input_file.readlines()
 
 trees = hash_to_bool(contents)

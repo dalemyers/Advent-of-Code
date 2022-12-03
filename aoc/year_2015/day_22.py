@@ -1,7 +1,3 @@
-import enum
-import itertools
-
-
 class Spell:
     def __init__(self, name, cost):
         self.name = name
@@ -67,18 +63,20 @@ class ShieldEffect(Effect):
         self.has_applied = has_applied
         super().__init__(remaining_duration)
 
-    def turn_start(self, player, boss):
+    def turn_start(self, player, _):
         self.duration -= 1
         if not self.has_applied:
             self.has_applied = True
             player.armor += 7
         # print(f"Shield's timer is now {self.duration}.")
 
-    def remove(self, player, boss):
+    def remove(self, player, _):
         player.armor -= 7
 
     def copy(self):
-        return ShieldEffect(remaining_duration=self.duration, has_applied=self.has_applied)
+        return ShieldEffect(
+            remaining_duration=self.duration, has_applied=self.has_applied
+        )
 
 
 class PoisonEffect(Effect):
@@ -86,7 +84,7 @@ class PoisonEffect(Effect):
         self.spell_name = "Poison"
         super().__init__(remaining_duration)
 
-    def turn_start(self, player, boss):
+    def turn_start(self, _, boss):
         boss.hp -= 3
         self.duration -= 1
         # print(f"Poison deals 3 damage; its timer is now {self.duration}.")
@@ -100,7 +98,7 @@ class RechargeEffect(Effect):
         self.spell_name = "Recharge"
         super().__init__(remaining_duration)
 
-    def turn_start(self, player, boss):
+    def turn_start(self, player, _):
         player.mana += 101
         self.duration -= 1
         # print(f"Recharge provides 101 mana; its timer is now {self.duration}.")

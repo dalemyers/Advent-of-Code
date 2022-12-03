@@ -69,15 +69,15 @@ def update_positions(all_moons: List[Moon]) -> None:
         moon.update_position()
 
 
-def run_system(all_moons: List[Moon], steps: int) -> None:
+def run_system(system_moons: List[Moon], steps: int) -> None:
     step = 1
 
     while True:
-        update_positions(all_moons)
+        update_positions(system_moons)
 
         print(f"After {step} steps:")
-        for moon in all_moons:
-            print(moon)
+        for system_moon in system_moons:
+            print(system_moon)
         print()
 
         if step >= steps:
@@ -87,9 +87,9 @@ def run_system(all_moons: List[Moon], steps: int) -> None:
 
     total_energy = 0
     print(f"Energy after {step} steps:")
-    for moon in all_moons:
-        total_energy += moon.energy()
-        print(moon.name, moon.energy())
+    for system_moon in system_moons:
+        total_energy += system_moon.energy()
+        print(system_moon.name, system_moon.energy())
     print("Total", total_energy)
 
 
@@ -101,12 +101,12 @@ def lcms(*numbers):
     return reduce(lcm, numbers)
 
 
-def find_period(all_moons: List[Moon]) -> Optional[int]:
+def find_period(system_moon: List[Moon]) -> Optional[int]:
     step = 1
 
-    initial_x_state = [(moon.x, moon.x_v) for moon in all_moons]
-    initial_y_state = [(moon.y, moon.y_v) for moon in all_moons]
-    initial_z_state = [(moon.z, moon.z_v) for moon in all_moons]
+    initial_x_state = [(moon.x, moon.x_v) for moon in system_moon]
+    initial_y_state = [(moon.y, moon.y_v) for moon in system_moon]
+    initial_z_state = [(moon.z, moon.z_v) for moon in system_moon]
 
     x_period = None
     y_period = None
@@ -114,20 +114,20 @@ def find_period(all_moons: List[Moon]) -> Optional[int]:
 
     while True:
 
-        update_positions(all_moons)
+        update_positions(system_moon)
 
         if not x_period:
-            x_state = [(moon.x, moon.x_v) for moon in all_moons]
+            x_state = [(moon.x, moon.x_v) for moon in system_moon]
             if x_state == initial_x_state:
                 x_period = step
 
         if not y_period:
-            y_state = [(moon.y, moon.y_v) for moon in all_moons]
+            y_state = [(moon.y, moon.y_v) for moon in system_moon]
             if y_state == initial_y_state:
                 y_period = step
 
         if not z_period:
-            z_state = [(moon.z, moon.z_v) for moon in all_moons]
+            z_state = [(moon.z, moon.z_v) for moon in system_moon]
             if z_state == initial_z_state:
                 z_period = step
 
@@ -141,7 +141,7 @@ def find_period(all_moons: List[Moon]) -> Optional[int]:
     return lcms(x_period, y_period, z_period)
 
 
-with open("year_2019/input_12.txt") as input_file:
+with open("year_2019/input_12.txt", encoding="utf-8") as input_file:
     contents = input_file.read().strip()
 
 lines = contents.split("\n")

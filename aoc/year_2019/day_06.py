@@ -1,4 +1,4 @@
-with open("input_06.txt") as f:
+with open("input_06.txt", encoding="utf-8") as f:
     full_input = f.read().strip()
 
 orbit_list = list(map(lambda x: x.split(")"), full_input.split("\n")))

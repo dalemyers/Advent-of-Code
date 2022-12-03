@@ -1,8 +1,7 @@
 import enum
-from typing import List, Optional, Tuple
+from typing import List, Optional
 
 import intcode
-import utility
 
 
 class Turn(enum.Enum):
@@ -88,7 +87,7 @@ class Camera:
     def run(self) -> None:
         self.computer.run()
 
-    def render_character(self, name: str, value: int) -> None:
+    def render_character(self, _: str, value: int) -> None:
         character = chr(value)
         if character != "\n":
             self.current_row.append(character)
@@ -114,7 +113,7 @@ def part1(input_values) -> None:
                     neighbors += camera.output[y + 1][x]
                     if neighbors == "####":
                         intersections.append((x, y))
-                except:
+                except KeyError:
                     continue
 
     total = 0
@@ -144,14 +143,18 @@ class Pathfinder:
         self.droid_direction = None
         self.input_mode = InputMode.MAIN
         self.total_dust = 0
+        self.a = []
+        self.b = []
+        self.c = []
+        self.full_output = []
 
     def run(self) -> None:
         self.camera.run()
 
-    def dust_collector(self, name: str, value: int) -> None:
+    def dust_collector(self, _: str, value: int) -> None:
         self.total_dust = value
 
-    def get_input(self, name: str) -> int:
+    def get_input(self, _: str) -> int:
         if self.droid_direction is None:
             self.find_droid()
             self.find_route()
@@ -302,7 +305,9 @@ class Pathfinder:
             compressed_a = full_output[:]
             for index in reversed(indices_a):
                 compressed_a = (
-                    compressed_a[:index] + ["A"] + compressed_a[index + len(array_slice_a) :]
+                    compressed_a[:index]
+                    + ["A"]
+                    + compressed_a[index + len(array_slice_a) :]
                 )
 
             for _, array_slice_b in all_slices(compressed_a):
@@ -317,7 +322,9 @@ class Pathfinder:
                 compressed_b = compressed_a[:]
                 for index in reversed(indices_b):
                     compressed_b = (
-                        compressed_b[:index] + ["B"] + compressed_b[index + len(array_slice_b) :]
+                        compressed_b[:index]
+                        + ["B"]
+                        + compressed_b[index + len(array_slice_b) :]
                     )
 
                 for _, array_slice_c in all_slices(compressed_b):
@@ -369,7 +376,9 @@ class Pathfinder:
             if required_direction is None:
                 break
 
-            full_output.append(self.droid_direction.turn_to_commands(required_direction).value)
+            full_output.append(
+                self.droid_direction.turn_to_commands(required_direction).value
+            )
             self.droid_direction = required_direction
 
             # Try and move forward as far as possible
@@ -398,10 +407,10 @@ def part2(input_values) -> None:
     print("Part 2:", pathfinder.total_dust)
 
 
-with open("year_2019/input_17.txt") as input_file:
+with open("year_2019/input_17.txt", encoding="utf-8") as input_file:
     contents = input_file.read()
 
-input_values = list(map(int, contents.split(",")))
+all_input_values = list(map(int, contents.split(",")))
 
-part1(input_values)
-part2(input_values)
+part1(all_input_values)
+part2(all_input_values)

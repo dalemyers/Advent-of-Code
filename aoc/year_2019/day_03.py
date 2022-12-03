@@ -1,6 +1,6 @@
 import enum
 import operator
-from typing import Callable, Dict, List, Set, Tuple
+from typing import Callable, Dict, List, Optional, Set, Tuple
 
 
 class Direction(enum.Enum):
@@ -21,9 +21,9 @@ class Instruction:
     direction: Direction
     distance: int
 
-    def __init__(self, instruction: str) -> None:
-        self.direction = Direction(instruction[0])
-        self.distance = int(instruction[1:])
+    def __init__(self, values: str) -> None:
+        self.direction = Direction(values[0])
+        self.distance = int(values[1:])
 
     def __repr__(self) -> str:
         return f"{self.direction.value}{self.distance}"
@@ -34,7 +34,7 @@ def parse_line(line: str) -> List[Instruction]:
     return list(map(Instruction, instructions))
 
 
-with open("input_03.txt") as f:
+with open("input_03.txt", encoding="utf-8") as f:
     lines = f.readlines()
     wire1_data = parse_line(lines[0])
     wire2_data = parse_line(lines[1])

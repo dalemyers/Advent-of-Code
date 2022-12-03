@@ -1,6 +1,6 @@
 import re
 
-with open("year_2020/input_02.txt") as input_file:
+with open("year_2020/input_02.txt", encoding="utf-8") as input_file:
     contents = input_file.readlines()
 
 contents = [c.strip() for c in contents]
@@ -46,7 +46,9 @@ def part2():
         p2 = int(match.group(2)) - 1
         letter = match.group(3)
         password = match.group(4)
-        if (password[p1] == letter or password[p2] == letter) and password[p1] != password[p2]:
+        if (password[p1] == letter or password[p2] == letter) and password[
+            p1
+        ] != password[p2]:
             valid_passwords += 1
     return valid_passwords
 

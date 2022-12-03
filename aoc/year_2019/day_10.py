@@ -1,14 +1,14 @@
 import math
 from typing import List
 
-with open("year_2019/input_10.txt") as input_file:
+with open("year_2019/input_10.txt", encoding="utf-8") as input_file:
     contents = input_file.read()
 
 
-def load_grid(contents) -> List[List[int]]:
+def load_grid(grid_contents) -> List[List[int]]:
     grid = []
 
-    for line in contents.split("\n"):
+    for line in grid_contents.split("\n"):
         row = []
         for character in line:
             if character == "#":
@@ -38,9 +38,6 @@ def detections(grid, x, y) -> int:
             points_in_angle[theta].append((w, h))
 
     return points_in_angle
-
-
-grid = load_grid(contents)
 
 
 def get_max_detections_location(grid):
@@ -92,6 +89,7 @@ def vaporize(grid, location):
                 return asteroid
 
 
-location, detection_count = get_max_detections_location(grid)
-print("Part 1:", location, detection_count)
-print("Part 2:", vaporize(grid, location))
+main_grid = load_grid(contents)
+detection_location, detection_count = get_max_detections_location(main_grid)
+print("Part 1:", detection_location, detection_count)
+print("Part 2:", vaporize(main_grid, detection_location))

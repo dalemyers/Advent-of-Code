@@ -3,7 +3,7 @@ from typing import List, Tuple
 
 import intcode
 
-with open("year_2019/input_09.txt") as input_file:
+with open("year_2019/input_09.txt", encoding="utf-8") as input_file:
     contents = input_file.read()
 
 input_values = list(map(int, contents.split(",")))

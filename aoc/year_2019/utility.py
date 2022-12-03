@@ -46,7 +46,9 @@ def render_bw_grid(grid: List[List[int]]) -> str:
     img.show()
 
 
-def render_grid(grid: List[List[Any]], color_map: Dict[Any, Tuple[int, int, int]]) -> str:
+def render_grid(
+    grid: List[List[Any]], color_map: Dict[Any, Tuple[int, int, int]]
+) -> str:
 
     height = len(grid)
     width = len(grid[0])
@@ -61,7 +63,9 @@ def render_grid(grid: List[List[Any]], color_map: Dict[Any, Tuple[int, int, int]
     img.show()
 
 
-def render_ascii(grid: List[List[Any]], ascii_map: Optional[Dict[Any, str]] = None) -> str:
+def render_ascii(
+    grid: List[List[Any]], ascii_map: Optional[Dict[Any, str]] = None
+) -> str:
 
     output = ""
 
@@ -96,13 +100,13 @@ def dict_grid_to_real(
         x, y = key.split("/")
         x = int(x)
         y = int(y)
-        if min_x == None or x < min_x:
+        if min_x is None or x < min_x:
             min_x = x
-        if max_x == None or x > max_x:
+        if max_x is None or x > max_x:
             max_x = x
-        if min_y == None or y < min_y:
+        if min_y is None or y < min_y:
             min_y = y
-        if max_y == None or y > max_y:
+        if max_y is None or y > max_y:
             max_y = y
 
     width = max_x - min_x + 1

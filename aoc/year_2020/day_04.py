@@ -39,7 +39,7 @@ def get_passports(raw_data):
     return passports
 
 
-with open("year_2020/input_04.txt") as input_file:
+with open("year_2020/input_04.txt", encoding="utf-8") as input_file:
     contents = input_file.read()
 
 

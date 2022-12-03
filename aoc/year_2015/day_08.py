@@ -1,4 +1,4 @@
-with open("year_2015/input_08.txt") as f:
+with open("year_2015/input_08.txt", encoding="utf-8") as f:
     contents = f.read()
 
 
@@ -58,9 +58,6 @@ def part2():
                 continue
 
         line = f'"{line}"'
-
-        character_count = len(line)
-        code_count = len(original_line)
 
         diff += len(line) - len(original_line)
 

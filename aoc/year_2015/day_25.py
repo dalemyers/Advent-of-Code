@@ -1,5 +1,3 @@
-from itertools import combinations
-from functools import reduce
 from shared import create_int_grid
 
 

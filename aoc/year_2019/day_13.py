@@ -73,11 +73,13 @@ class Screen:
 
     def render_ascii(self) -> str:
         real = utility.dict_grid_to_real(self.grid, Tile.EMPTY)
-        return utility.render_ascii(real, TILE_ASCII_MAP) + "\n" + str(self.score) + "\n"
+        return (
+            utility.render_ascii(real, TILE_ASCII_MAP) + "\n" + str(self.score) + "\n"
+        )
 
     def count_of(self, tile: Tile) -> int:
         count = 0
-        for key, value in self.grid.items():
+        for value in self.grid.values():
             if value == tile:
                 count += 1
         return count
@@ -95,8 +97,8 @@ class Joystick:
         self.paddle_position_callback = paddle_position_callback
 
     def get_direction(self) -> int:
-        bx, by = self.ball_position_callback()
-        px, py = self.paddle_position_callback()
+        bx, _ = self.ball_position_callback()
+        px, _ = self.paddle_position_callback()
 
         if bx < px:
             return -1
@@ -110,13 +112,13 @@ def part1(input_values) -> None:
     screen = Screen()
 
     computer = intcode.Computer(program=input_values)
-    computer.output_callback = lambda name, value: screen.receive_input(value)
+    computer.output_callback = lambda _, value: screen.receive_input(value)
     computer.run()
 
     print(screen.count_of(Tile.BLOCK))
 
 
-with open("year_2019/input_13.txt") as input_file:
+with open("year_2019/input_13.txt", encoding="utf-8") as input_file:
     contents = input_file.read()
 
 input_values = list(map(int, contents.split(",")))
@@ -142,8 +144,8 @@ joystick = Joystick(get_ball_position, get_paddle_position)
 
 computer = intcode.Computer(program=input_values)
 computer.set_value(2, 0)
-computer.output_callback = lambda name, value: screen.receive_input(value)
-computer.input_callback = lambda name: joystick.get_direction()
+computer.output_callback = lambda _, value: screen.receive_input(value)
+computer.input_callback = lambda _: joystick.get_direction()
 computer.run()
 
 

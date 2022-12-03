@@ -60,10 +60,6 @@ class Computer:
         self.input_callback = input_callback
         self.output_callback = output_callback
 
-    @staticmethod
-    def from_string(string_integers: str) -> "Program":
-        return Program(list(map(int, string_integers.split(","))))
-
     def get_next(self, parameter_mode: ParameterMode, *, address: bool = False) -> int:
         value = self.peek_next(parameter_mode=parameter_mode, address=address)
         self.index += 1
@@ -93,6 +89,8 @@ class Computer:
 
             if parameter_mode == ParameterMode.RELATIVE:
                 return self.get_value(self.relative_base + value)
+
+        raise Exception()
 
     def peek_next_instruction(self) -> Opcode:
         value = self.get_value(self.index)
@@ -195,7 +193,7 @@ class Computer:
         if opcode == Opcode.INPUT:
             assert self.input_callback is not None
             value = self.input_callback(self.name)
-            assert type(value) == int
+            assert isinstance(value, int)
             output_index = self.get_next(parameter_modes[0], address=True)
             self.set_value(value, output_index)
             return opcode
@@ -252,8 +250,6 @@ class Computer:
             raise HaltException()
 
         assert False, "Never should reach here"
-
-        return opcode
 
     def try_do_next(self) -> Opcode:
         try:

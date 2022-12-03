@@ -1,7 +1,7 @@
 import copy
 from shared import get_positions, find_locations
 
-with open("year_2015/input_19.txt") as f:
+with open("year_2015/input_19.txt", encoding="utf-8") as f:
     contents = f.readlines()
 
 
@@ -14,7 +14,7 @@ def parse_molecule(string):
         else:
             output.append(buffer)
             buffer = character
-    if buffer != "":
+    if len(buffer) > 0:
         output.append(buffer)
     return [m for m in output if len(m) > 0]
 
@@ -23,12 +23,12 @@ def replace_list(input_list, value, replacement, max_replacements=None):
     new_list = copy.deepcopy(input_list)
     if max_replacements is None:
         max_replacements = len(input_list)
-    replacements = 0
+    current_replacements = 0
     for index, original_value in enumerate(input_list):
         if original_value == value:
             new_list[index] = replacement
-            replacements += 1
-            if replacements >= max_replacements:
+            current_replacements += 1
+            if current_replacements >= max_replacements:
                 return new_list
 
     return new_list
@@ -49,7 +49,7 @@ for line in contents:
     if replacements.get(input_value) is None:
         replacements[input_value] = []
     replacements[input_value].append(parse_molecule(output_value))
-    replacements[input_value].sort(key=lambda x: len(x))
+    replacements[input_value].sort(key=len)
     constructions[output_value] = input_value
 
 
@@ -102,7 +102,9 @@ def part2_ll():
             for replacement in replacements.get(atom, []):
                 if len(replacement) > remaining_length:
                     break
-                new_attempt = last_value[:atom_index] + replacement + last_value[atom_index + 1 :]
+                new_attempt = (
+                    last_value[:atom_index] + replacement + last_value[atom_index + 1 :]
+                )
                 j = "".join(new_attempt)
                 if j in seen:
                     continue
@@ -118,7 +120,7 @@ def part2():
 
     stack = [(0, molecule_str)]
 
-    reverses = [(k, v) for k, v in constructions.items()]
+    reverses = list(constructions.items())
     reverses.sort(key=lambda x: len(x[0]))
 
     while True:

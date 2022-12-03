@@ -3,7 +3,7 @@ import re
 import string
 
 
-with open("year_2016/input_04.txt") as f:
+with open("year_2016/input_04.txt", encoding="utf-8") as f:
     contents = f.readlines()
 
 
@@ -25,7 +25,7 @@ def parse_entries():
     return output
 
 
-def validate_entry(name, sector_id, checksum):
+def validate_entry(name, checksum):
 
     counter = collections.Counter()
     name = name.replace("-", "")
@@ -60,7 +60,7 @@ def part1():
 
     total = 0
     for name, sector_id, checksum in entries:
-        if validate_entry(name, sector_id, checksum):
+        if validate_entry(name, checksum):
             total += sector_id
 
     return total
@@ -71,7 +71,7 @@ def part2():
     entries = parse_entries()
 
     for name, sector_id, checksum in entries:
-        if not validate_entry(name, sector_id, checksum):
+        if not validate_entry(name, checksum):
             continue
 
         decoded = rot_encode(name, sector_id % 26)

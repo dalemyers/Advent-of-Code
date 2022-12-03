@@ -2,7 +2,7 @@ import itertools
 import re
 
 
-with open("year_2015/input_15.txt") as f:
+with open("year_2015/input_15.txt", encoding="utf-8") as f:
     input_data = f.read()
 
 # Chocolate: capacity 0, durability 0, flavor -2, texture 2, calories 8
@@ -41,7 +41,6 @@ for line in input_data.splitlines():
 
 def part1():
     best_score = 0
-    best_ingredients = []
 
     for i1 in range(100):
         for i2 in range(100):
@@ -92,7 +91,6 @@ def part1():
 
 def part2():
     best_score = 0
-    best_ingredients = []
 
     for i1 in range(100):
         for i2 in range(100):

@@ -1,7 +1,5 @@
 import enum
-from typing import Dict, List
-
-from PIL import Image
+from typing import Dict
 
 import intcode
 import utility
@@ -50,6 +48,8 @@ class OutputMode(enum.Enum):
         if self == OutputMode.DIRECTION:
             return OutputMode.COLOR
 
+        raise Exception()
+
 
 class Robot:
 
@@ -85,7 +85,7 @@ class Robot:
             color = Color(value)
             key = self.position_key()
             current_color = self.grid.get(key, None)
-            if current_color == None:
+            if current_color is None:
                 self.painted_count += 1
             self.grid[key] = color
 
@@ -107,12 +107,14 @@ class Robot:
         self.output_mode = self.output_mode.next_mode()
 
     def render_grid(self) -> str:
-        color_corrected = {k: 0 if v == Color.BLACK else 255 for k, v in self.grid.items()}
+        color_corrected = {
+            k: 0 if v == Color.BLACK else 255 for k, v in self.grid.items()
+        }
         corrected_grid = utility.dict_grid_to_real(color_corrected, 1)
         utility.render_bw_grid(corrected_grid)
 
 
-with open("year_2019/input_11.txt") as input_file:
+with open("year_2019/input_11.txt", encoding="utf-8") as input_file:
     contents = input_file.read()
 
 input_values = list(map(int, contents.split(",")))
@@ -121,8 +123,8 @@ input_values = list(map(int, contents.split(",")))
 def run(flip_initial_panel):
     robot = Robot(flip_initial_panel)
     computer = intcode.Computer(program=input_values)
-    computer.output_callback = lambda name, value: robot.handle_output(value)
-    computer.input_callback = lambda name: robot.get_current_color().value
+    computer.output_callback = lambda _, value: robot.handle_output(value)
+    computer.input_callback = lambda _: robot.get_current_color().value
     computer.run()
     return robot
 

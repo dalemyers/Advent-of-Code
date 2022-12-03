@@ -1,4 +1,4 @@
-with open("year_2015/input_02.txt") as f:
+with open("year_2015/input_02.txt", encoding="utf-8") as f:
     contents = f.read()
 
 

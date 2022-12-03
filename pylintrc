@@ -1,4 +1,5 @@
 [MASTER]
+init-hook='import sys; sys.path.append("aoc")'
 
 # Use multiple processes to speed up Pylint.
 jobs=4
@@ -25,7 +26,22 @@ accept-no-yeilds-doc=no
 # W1201 logging-not-lazy: Specify string format arguments as logging function parameters
 # W1202 logging-format-interpolation: Use % formatting in logging functions and pass the % parameters as arguments
 # W1203 logging-fstring-interpolation: Use % formatting in logging functions and pass the % parameters as arguments
-disable=C0413,C1801,R0801,R0911,W0511,W1201,W1202,W1203
+
+# AOC specific ones that I wouldn't use anywhere else:
+
+# W9011 Missing return documentation
+# W9012 Missing return type documentation
+# C0116 Missing function or method docstring
+# C0115 Missing class docstring
+# C0103 Variable name doesn't confirm to snake_case naming style
+# W0401 Wildcard import
+# C0114 Missing module docstring
+# R1702 Too many nested blocks
+# R0912 Too many branches
+# R0914 Too many locals
+# R0913 Too many arguments
+# E0401 Unable to import
+disable=C0413,C1801,R0801,R0911,W0511,W1201,W1202,W1203,W9011,W9012,C0116,C0115,C0103,W0401,C0114,R1702,R0912,R0914,R0913,E0401
 
 [BASIC]
 

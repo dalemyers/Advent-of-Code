@@ -1,6 +1,3 @@
-import itertools
-from typing import List
-
 from shared import read_ints_from_file
 
 
@@ -69,13 +66,15 @@ def solve(sizes, target_size):
 
     combinations.sort()
     lowest = min(map(len, combinations))
-    count = len([combination for combination in combinations if len(combination) == lowest])
+    count = len(
+        [combination for combination in combinations if len(combination) == lowest]
+    )
     return len(combinations), count
 
 
-sizes = read_ints_from_file("year_2015/input_17.txt")
-sizes.sort(reverse=True)
+all_sizes = read_ints_from_file("year_2015/input_17.txt")
+all_sizes.sort(reverse=True)
 
-part1, part2 = solve(sizes, 150)
+part1, part2 = solve(all_sizes, 150)
 print("Part 1:", part1)
 print("Part 2:", part2)

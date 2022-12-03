@@ -1,6 +1,6 @@
 import re
 
-with open("year_2015/input_23.txt") as f:
+with open("year_2015/input_23.txt", encoding="utf-8") as f:
     contents = f.readlines()
 
 """

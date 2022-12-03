@@ -1,7 +1,7 @@
 import copy
-from shared import create_bool_grid, create_int_grid
+from shared import create_bool_grid
 
-with open("year_2015/input_18.txt") as f:
+with open("year_2015/input_18.txt", encoding="utf-8") as f:
     contents = f.readlines()
 
 
@@ -24,7 +24,7 @@ def run(stick_corners=False):
 
     print_grid(bool_grid)
 
-    for i in range(100):
+    for _ in range(100):
         buffer = copy.deepcopy(bool_grid)
         for y in range(SIZE):
             for x in range(SIZE):
@@ -39,12 +39,18 @@ def run(stick_corners=False):
                         continue
                 upper_left = bool_grid[y - 1][x - 1] if y >= 1 and x >= 1 else False
                 upper = bool_grid[y - 1][x] if y >= 1 else False
-                upper_right = bool_grid[y - 1][x + 1] if y >= 1 and x < SIZE - 1 else False
+                upper_right = (
+                    bool_grid[y - 1][x + 1] if y >= 1 and x < SIZE - 1 else False
+                )
                 left = bool_grid[y][x - 1] if x >= 1 else False
                 right = bool_grid[y][x + 1] if x < SIZE - 1 else False
-                lower_left = bool_grid[y + 1][x - 1] if y < SIZE - 1 and x >= 1 else False
+                lower_left = (
+                    bool_grid[y + 1][x - 1] if y < SIZE - 1 and x >= 1 else False
+                )
                 lower = bool_grid[y + 1][x] if y < SIZE - 1 else False
-                lower_right = bool_grid[y + 1][x + 1] if y < SIZE - 1 and x < SIZE - 1 else False
+                lower_right = (
+                    bool_grid[y + 1][x + 1] if y < SIZE - 1 and x < SIZE - 1 else False
+                )
                 on = sum(
                     [
                         upper_left,

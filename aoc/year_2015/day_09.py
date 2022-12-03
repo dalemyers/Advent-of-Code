@@ -2,7 +2,7 @@ import itertools
 import sys
 
 
-with open("year_2015/input_09.txt") as f:
+with open("year_2015/input_09.txt", encoding="utf-8") as f:
     contents = f.read()
 
 distances = {}
@@ -22,15 +22,13 @@ for line in contents.splitlines():
 
 places = set()
 
-for place in distances.keys():
+for place, others in distances.items():
     places.add(place)
-    dests = distances[place].keys()
+    dests = others.keys()
     for dest in dests:
         places.add(dest)
 
-places = list(places)
-
-routes = list(itertools.permutations(places))
+routes = list(itertools.permutations(list(places)))
 
 min_dist = sys.maxsize
 max_dist = 0

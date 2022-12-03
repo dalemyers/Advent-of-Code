@@ -8,7 +8,6 @@ def group(number_of_groups):
     values = sorted(values)
 
     smallest_product = reduce(lambda x, y: x * y, values)
-    smallest_group_1 = len(values)
     expected_weight = int(sum(values) / number_of_groups)
 
     solutions = []

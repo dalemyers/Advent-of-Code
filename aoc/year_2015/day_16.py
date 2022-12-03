@@ -1,8 +1,7 @@
-import itertools
 import re
 
 
-with open("year_2015/input_16.txt") as f:
+with open("year_2015/input_16.txt", encoding="utf-8") as f:
     input_data = f.read()
 
 

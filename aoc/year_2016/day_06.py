@@ -1,9 +1,7 @@
 import collections
-import re
-import string
 
 
-with open("year_2016/input_06.txt") as f:
+with open("year_2016/input_06.txt", encoding="utf-8") as f:
     contents = f.readlines()
 contents = [c.strip() for c in contents]
 

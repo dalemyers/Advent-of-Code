@@ -8,7 +8,7 @@ class SequenceType(enum.Enum):
     hypernet = 2
 
 
-with open("year_2016/input_07.txt") as f:
+with open("year_2016/input_07.txt", encoding="utf-8") as f:
     contents = f.readlines()
 contents = [c.strip() for c in contents]
 
@@ -38,7 +38,9 @@ def parse_ip(raw_ip):
     buffer = ""
 
     sequences = [
-        (sequence, sequence_type) for sequence, sequence_type in sequences if len(sequence) > 0
+        (sequence, sequence_type)
+        for sequence, sequence_type in sequences
+        if len(sequence) > 0
     ]
 
     return sequences
@@ -76,20 +78,21 @@ def find_abas(value):
 
 
 def has_ssl(ip):
-    normals = [sequence for sequence, sequence_type in ip if sequence_type == SequenceType.normal]
-    hypernets = [
-        sequence for sequence, sequence_type in ip if sequence_type == SequenceType.hypernet
+    normals = [
+        sequence
+        for sequence, sequence_type in ip
+        if sequence_type == SequenceType.normal
     ]
-
-    is_invalid = False
+    hypernets = [
+        sequence
+        for sequence, sequence_type in ip
+        if sequence_type == SequenceType.hypernet
+    ]
 
     for sequence in normals:
         locations = find_abas(sequence)
 
-        found = False
-        has_pattern = False
-
-        for pattern, span in locations:
+        for pattern, _ in locations:
             if pattern[0] == pattern[1]:
                 continue
 

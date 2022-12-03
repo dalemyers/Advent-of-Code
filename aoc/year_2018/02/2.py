@@ -16,7 +16,7 @@ def check(ids):
                 sys.exit(1)
 
 
-with open("02/input.txt") as input_file:
+with open("02/input.txt", encoding="utf-8") as input_file:
     ids = [line.strip() for line in input_file.readlines()]
 
 

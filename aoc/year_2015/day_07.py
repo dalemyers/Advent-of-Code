@@ -1,8 +1,7 @@
-import re
 import operator as op
 from shared import is_int
 
-with open("year_2015/input_07.txt") as f:
+with open("year_2015/input_07.txt", encoding="utf-8") as f:
     contents = f.read()
 
 gate_identifier = {
@@ -16,6 +15,7 @@ data = {}
 
 
 def resolve(b_override=None):
+    # pylint: disable-next=global-statement
     global data
     data = {}
 
@@ -24,7 +24,8 @@ def resolve(b_override=None):
         components = input_text.split(" ")
 
         components = [
-            int(component) if is_int(component) else component for component in components
+            int(component) if is_int(component) else component
+            for component in components
         ]
 
         if len(components) == 1:
@@ -50,8 +51,8 @@ def resolve(b_override=None):
 
         identifier_found = False
 
-        for key in data.keys():
-            operator, input1, input2 = data[key]
+        for key, values in data.items():
+            operator, input1, input2 = values
 
             if is_int(operator):
                 continue
@@ -61,13 +62,11 @@ def resolve(b_override=None):
                 if is_int(check[0]):
                     operator = check[0]
                     data[key] = (operator, None, None)
-                    continue
-                else:
-                    continue
-            else:
-                if is_int(input1) and (input2 is None or is_int(input2)):
-                    data[key] = (operator(input1, input2) & 65535, None, None)
-                    continue
+                continue
+
+            if is_int(input1) and (input2 is None or is_int(input2)):
+                data[key] = (operator(input1, input2) & 65535, None, None)
+                continue
 
             if not is_int(input1):
                 identifier_found = True

@@ -1,6 +1,6 @@
 import intcode
 
-with open("year_2019/input_05.txt") as f:
+with open("year_2019/input_05.txt", encoding="utf-8") as f:
     full_input = f.read().strip()
 
 computer1 = intcode.Computer(program=list(map(int, full_input.split(","))))

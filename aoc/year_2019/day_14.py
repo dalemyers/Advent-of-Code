@@ -1,6 +1,6 @@
 import collections
 import math
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List
 
 
 class Material:
@@ -30,7 +30,6 @@ class Reaction:
         self.output = output
 
     def __repr__(self) -> str:
-        output = ""
         input_strings = [str(material) for material in self.inputs]
         return ", ".join(input_strings) + " => " + str(self.output)
 
@@ -43,7 +42,9 @@ class Reaction:
         input_materials = input_materials.strip()
         output_material = output_material.strip()
 
-        inputs = [Material.from_string(material) for material in input_materials.split(", ")]
+        inputs = [
+            Material.from_string(material) for material in input_materials.split(", ")
+        ]
         output = Material.from_string(output_material)
 
         return Reaction(inputs, output)
@@ -78,7 +79,9 @@ def create_material(
 
     for input_material in production_reaction.inputs:
         input_material_count = input_material.count * recipe_iterations
-        total_ore += create_material(input_material.name, input_material_count, spares, reactions)
+        total_ore += create_material(
+            input_material.name, input_material_count, spares, reactions
+        )
 
     if created_material > count_required:
         spares[material_to_create] += created_material - count_required
@@ -86,7 +89,7 @@ def create_material(
     return total_ore
 
 
-with open("year_2019/input_14.txt") as input_file:
+with open("year_2019/input_14.txt", encoding="utf-8") as input_file:
     contents = input_file.read().strip()
 
 all_reactions = {
