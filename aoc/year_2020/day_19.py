@@ -28,7 +28,7 @@ def expand_disjunction(disjunction, rules):
     return output
 
 
-def to_regex(rule, disjunction = False):
+def to_regex(rule, disjunction=False):
     output = []
 
     if type(rule) == str:
@@ -83,13 +83,15 @@ def parse_input(replacements=None):
         rules[int(rule_id)] = parsed_disjunctions
 
     messages = []
-    for line in contents[index+1:]:
+    for line in contents[index + 1 :]:
         messages.append(line)
 
     return rules, messages
 
 
-def expand_rules(rules,):
+def expand_rules(
+    rules,
+):
 
     p1_42 = expand_disjunction(rules[42][0], rules)
     p2_42 = expand_disjunction(rules[42][1], rules)
@@ -136,12 +138,13 @@ def part1():
     return match_count
 
 
-
 def part2():
-    rules, messages = parse_input({
-        "8": "42 | 42 8",
-        "11": "42 31 | 42 11 31",
-    })
+    rules, messages = parse_input(
+        {
+            "8": "42 | 42 8",
+            "11": "42 31 | 42 11 31",
+        }
+    )
 
     expand_rules(rules)
 
@@ -162,6 +165,7 @@ def part2():
             continue
 
     return match_count
+
 
 if __name__ == "__main__":
     print("Part 1:", part1())

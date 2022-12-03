@@ -4,7 +4,6 @@ input_labels = list(map(int, read_file_lines("year_2020/input_23.txt")[0]))
 
 
 class Node:
-
     def __init__(self, value):
         self.value = value
         self.next = None
@@ -73,7 +72,7 @@ def move(i, should_log, should_log_verbose, current_node, node_map, highest, low
         if max_label not in picked_up:
             destination = node_map[max_label]
         max_label -= 1
-###
+    ###
 
     destination_successor = destination.next
     destination.next = picked_up[0]
@@ -81,6 +80,7 @@ def move(i, should_log, should_log_verbose, current_node, node_map, highest, low
     picked_up[-1].next = destination_successor
 
     return current_node.next
+
 
 def run(max_moves, node_extension):
     cup_list = input_labels[:]
@@ -91,9 +91,9 @@ def run(max_moves, node_extension):
         cup_list = cup_list + list(range(highest + 1, node_extension + 1))
 
     nodes = [Node(v) for v in cup_list]
-    for i in range(0, len(nodes)-1):
-        nodes[i].next = nodes[i+1]
-    nodes[len(cup_list)-1].next = nodes[0]
+    for i in range(0, len(nodes) - 1):
+        nodes[i].next = nodes[i + 1]
+    nodes[len(cup_list) - 1].next = nodes[0]
 
     node_map = {v: nodes[n] for n, v in enumerate(cup_list)}
 
@@ -104,10 +104,11 @@ def run(max_moves, node_extension):
 
     for i in range(0, max_moves):
         current_node = move(i, i % 10_000 == 0, False, current_node, node_map, highest, lowest)
-        if current_node.value == 814631: # 1870830 1870833
+        if current_node.value == 814631:  # 1870830 1870833
             breakpoint()
 
     return current_node, node_map
+
 
 def part1():
     current_node, node_map = run(100, None)
@@ -118,6 +119,7 @@ def part2():
     current_node, node_map = run(10_000_000, 1_000_000)
     return current_node.next.value * current_node.next.next.value
 
+
 if __name__ == "__main__":
-    #print("Part 1:", part1())
+    # print("Part 1:", part1())
     print("Part 2:", part2())

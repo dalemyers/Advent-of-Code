@@ -1,12 +1,13 @@
 import enum
 import math
 
+
 class Direction(enum.Enum):
 
-    north = 'N'
-    east = 'E'
-    south = 'S'
-    west = 'W'
+    north = "N"
+    east = "E"
+    south = "S"
+    west = "W"
 
     def right(self):
         if self == Direction.north:
@@ -28,11 +29,13 @@ class Direction(enum.Enum):
         else:
             return Direction.north
 
+
 with open("year_2016/input_01.txt") as f:
     contents = f.read()
 
 commands = contents.strip().split(", ")
 commands = [(command[0], int(command[1:])) for command in commands]
+
 
 def part1():
 
@@ -40,7 +43,7 @@ def part1():
     x = 0
     y = 0
     for command in commands:
-        if command[0] == 'R':
+        if command[0] == "R":
             direction = direction.right()
         else:
             direction = direction.left()
@@ -64,7 +67,7 @@ def part2():
     y = 0
     visited = set()
     for command in commands:
-        if command[0] == 'R':
+        if command[0] == "R":
             direction = direction.right()
         else:
             direction = direction.left()

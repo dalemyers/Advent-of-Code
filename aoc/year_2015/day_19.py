@@ -33,6 +33,7 @@ def replace_list(input_list, value, replacement, max_replacements=None):
 
     return new_list
 
+
 contents = [line.strip() for line in contents]
 molecule_string = contents[-1]
 contents = contents[:-2]
@@ -101,8 +102,8 @@ def part2_ll():
             for replacement in replacements.get(atom, []):
                 if len(replacement) > remaining_length:
                     break
-                new_attempt = last_value[:atom_index] + replacement + last_value[atom_index+1:]
-                j = ''.join(new_attempt)
+                new_attempt = last_value[:atom_index] + replacement + last_value[atom_index + 1 :]
+                j = "".join(new_attempt)
                 if j in seen:
                     continue
                 seen.add(j)
@@ -113,11 +114,11 @@ def part2_ll():
 
 def part2():
 
-    molecule_str = ''.join(molecule)
+    molecule_str = "".join(molecule)
 
     stack = [(0, molecule_str)]
 
-    reverses = [(k, v) for k,v in constructions.items()]
+    reverses = [(k, v) for k, v in constructions.items()]
     reverses.sort(key=lambda x: len(x[0]))
 
     while True:
@@ -126,7 +127,7 @@ def part2():
 
         count, m = stack.pop()
 
-        if m == 'e':
+        if m == "e":
             return count
 
         for compound, derivative in reverses:
@@ -135,11 +136,11 @@ def part2():
 
             locations = find_locations(m, compound)
             for location in locations:
-                new_molecule = m[:location] + derivative + m[location + len(compound):]
+                new_molecule = m[:location] + derivative + m[location + len(compound) :]
                 stack.append((count + 1, new_molecule))
 
-
     return None
+
 
 print("Part 1:", part1())
 print("Part 2:", part2())

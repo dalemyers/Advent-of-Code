@@ -10,13 +10,12 @@ def get_foods():
 
     for line in contents:
         ingredients, allergens = line.split(" (")
-        allergens = allergens[len("contains "):-1]
+        allergens = allergens[len("contains ") : -1]
         allergens = allergens.split(", ")
         ingredients = ingredients.split(" ")
         foods.append((set(ingredients), set(allergens)))
 
     return foods
-
 
 
 def get_allergen_map(foods):
@@ -62,7 +61,10 @@ def get_info():
         changes = False
 
         for allergen, ingredient in known_allergens.items():
-            for potential_allergen, potential_ingredients in potential_allergens.items():
+            for (
+                potential_allergen,
+                potential_ingredients,
+            ) in potential_allergens.items():
                 if ingredient in potential_ingredients:
                     changes = True
                     potential_ingredients.remove(ingredient)
@@ -97,12 +99,11 @@ def part1():
 def part2():
     _, known_allergens_dict = get_info()
 
-    known_allergens = [(k,v) for k,v in known_allergens_dict.items()]
+    known_allergens = [(k, v) for k, v in known_allergens_dict.items()]
     known_allergens.sort(key=lambda x: x[0])
 
     ingredients = ",".join([x[1] for x in known_allergens])
     return ingredients
-
 
 
 if __name__ == "__main__":

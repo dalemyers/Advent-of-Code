@@ -6,9 +6,11 @@ from PIL import Image
 import intcode
 import utility
 
+
 class Color(enum.Enum):
     BLACK = 0
     WHITE = 1
+
 
 class Orientation(enum.Enum):
     NORTH = 0
@@ -16,7 +18,7 @@ class Orientation(enum.Enum):
     SOUTH = 2
     WEST = 3
 
-    def turn_left(self) -> 'Orientation':
+    def turn_left(self) -> "Orientation":
         if self == Orientation.NORTH:
             return Orientation.WEST
         if self == Orientation.EAST:
@@ -26,7 +28,7 @@ class Orientation(enum.Enum):
         if self == Orientation.WEST:
             return Orientation.SOUTH
 
-    def turn_right(self) -> 'Orientation':
+    def turn_right(self) -> "Orientation":
         if self == Orientation.NORTH:
             return Orientation.EAST
         if self == Orientation.EAST:
@@ -35,17 +37,19 @@ class Orientation(enum.Enum):
             return Orientation.WEST
         if self == Orientation.WEST:
             return Orientation.NORTH
+
 
 class OutputMode(enum.Enum):
     COLOR = 1
     DIRECTION = 2
 
-    def next_mode(self) -> 'OutputMode':
+    def next_mode(self) -> "OutputMode":
         if self == OutputMode.COLOR:
             return OutputMode.DIRECTION
 
         if self == OutputMode.DIRECTION:
             return OutputMode.COLOR
+
 
 class Robot:
 
@@ -57,7 +61,7 @@ class Robot:
     orientation: Orientation
     flip_initial_panel: bool
 
-    def __init__(self, flip_initial_panel = False) -> None:
+    def __init__(self, flip_initial_panel=False) -> None:
         self.x = 0
         self.y = 0
         self.flip_initial_panel = flip_initial_panel
@@ -103,16 +107,16 @@ class Robot:
         self.output_mode = self.output_mode.next_mode()
 
     def render_grid(self) -> str:
-        color_corrected = {k: 0 if v == Color.BLACK else 255 for k,v in self.grid.items()}
+        color_corrected = {k: 0 if v == Color.BLACK else 255 for k, v in self.grid.items()}
         corrected_grid = utility.dict_grid_to_real(color_corrected, 1)
         utility.render_bw_grid(corrected_grid)
-
 
 
 with open("year_2019/input_11.txt") as input_file:
     contents = input_file.read()
 
 input_values = list(map(int, contents.split(",")))
+
 
 def run(flip_initial_panel):
     robot = Robot(flip_initial_panel)
@@ -122,11 +126,14 @@ def run(flip_initial_panel):
     computer.run()
     return robot
 
+
 def part1():
     print(run(False).painted_count)
 
+
 def part2():
     run(True).render_grid()
+
 
 part1()
 part2()

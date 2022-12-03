@@ -57,7 +57,6 @@ def calculate_score(deck):
 
 
 class States:
-
     def __init__(self, states=None, player_indices=None):
         if states:
             self.states = states
@@ -83,8 +82,8 @@ class States:
     def copy(self):
         return States(self.states[:], self.player_indices[:])
 
-class GameState:
 
+class GameState:
     def __init__(self, p1, p2, final_p1=None, final_p2=None):
         self.p1 = p1[:]
         self.p2 = p2[:]
@@ -102,12 +101,13 @@ class GameState:
 
 
 def log(*args):
-    #pass
+    # pass
     print(*args)
 
 
 GAME_COUNTER = 1
 PREVIOUS_STATES = set()
+
 
 def play_recursive_combat(p1, p2):
     global GAME_COUNTER
@@ -123,13 +123,11 @@ def play_recursive_combat(p1, p2):
             if value == current_state:
                 return value.final_p1, value.final_p2
 
-
     counter = 0
     states = States()
 
     log(f"=== Game {game} ===")
     log()
-
 
     while len(p1) != 0 and len(p2) != 0:
 
@@ -178,7 +176,7 @@ def play_recursive_combat(p1, p2):
             p2.append(p1_top)
         else:
             raise Exception()
-    
+
         log()
 
     log()

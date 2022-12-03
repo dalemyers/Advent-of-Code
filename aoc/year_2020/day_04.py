@@ -1,14 +1,14 @@
 from shared import is_int
 
 FIELDS = [
-"byr",
-"iyr",
-"eyr",
-"hgt",
-"hcl",
-"ecl",
-"pid",
-#"cid",
+    "byr",
+    "iyr",
+    "eyr",
+    "hgt",
+    "hcl",
+    "ecl",
+    "pid",
+    # "cid",
 ]
 
 
@@ -39,9 +39,9 @@ def get_passports(raw_data):
     return passports
 
 
-
 with open("year_2020/input_04.txt") as input_file:
     contents = input_file.read()
+
 
 def part1():
     passports = get_passports(contents)
@@ -142,7 +142,6 @@ def validate_passportid(value):
     return is_int(value)
 
 
-
 def part2():
     passports = get_passports(contents)
     count = 0
@@ -150,25 +149,25 @@ def part2():
     for passport in passports:
         is_valid = True
 
-        if not validate_year(passport.get('byr'), 1920, 2002):
+        if not validate_year(passport.get("byr"), 1920, 2002):
             continue
 
-        if not validate_year(passport.get('iyr'), 2010, 2020):
+        if not validate_year(passport.get("iyr"), 2010, 2020):
             continue
 
-        if not validate_year(passport.get('eyr'), 2020, 2030):
+        if not validate_year(passport.get("eyr"), 2020, 2030):
             continue
 
-        if not validate_height(passport.get('hgt')):
+        if not validate_height(passport.get("hgt")):
             continue
 
-        if not validate_haircolor(passport.get('hcl')):
+        if not validate_haircolor(passport.get("hcl")):
             continue
 
-        if not validate_eyecolor(passport.get('ecl')):
+        if not validate_eyecolor(passport.get("ecl")):
             continue
 
-        if not validate_passportid(passport.get('pid')):
+        if not validate_passportid(passport.get("pid")):
             continue
 
         count += 1

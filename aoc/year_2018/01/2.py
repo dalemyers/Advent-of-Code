@@ -3,7 +3,7 @@ import sys
 frequencies = {}
 frequency = 0
 
-with open('01/input.txt') as input_file:
+with open("01/input.txt") as input_file:
     deltas = [int(line) for line in input_file.readlines()]
 
 while True:

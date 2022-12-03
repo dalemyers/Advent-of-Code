@@ -4,6 +4,7 @@ from shared import read_ints_from_file, product
 
 contents = read_ints_from_file("year_2020/input_10.txt")
 
+
 def part1():
     adapters = sorted(contents)
     adapters = [0] + adapters + [max(adapters) + 3]
@@ -22,6 +23,7 @@ def part1():
 
     return diff_1 * diff_3
 
+
 def part2():
     adapters = sorted(contents)
     device_adapter = adapters[-1] + 3
@@ -36,6 +38,7 @@ def part2():
         paths[adapter] = back_1 + back_2 + back_3
 
     return paths[device_adapter]
+
 
 print("Part 1:", part1())
 print("Part 2:", part2())

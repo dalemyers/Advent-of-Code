@@ -2,6 +2,7 @@ from shared import read_file_lines
 
 contents = read_file_lines("year_2020/input_05.txt")
 
+
 def handle_boarding_pass(boarding_pass):
     lower = 0
     upper = 127
@@ -12,13 +13,13 @@ def handle_boarding_pass(boarding_pass):
         if character == "F":
             upper = int((lower + upper + 1) / 2) - 1
         else:
-            lower = int((lower + upper + 1) / 2) 
+            lower = int((lower + upper + 1) / 2)
 
     for character in boarding_pass[7:]:
         if character == "L":
             right = int((left + right + 1) / 2) - 1
         else:
-            left = int((left + right + 1) / 2) 
+            left = int((left + right + 1) / 2)
 
     row = lower
     column = left

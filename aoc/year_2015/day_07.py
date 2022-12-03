@@ -14,6 +14,7 @@ gate_identifier = {
 
 data = {}
 
+
 def resolve(b_override=None):
     global data
     data = {}
@@ -22,7 +23,9 @@ def resolve(b_override=None):
         input_text, output = line.split(" -> ")
         components = input_text.split(" ")
 
-        components = [int(component) if is_int(component) else component for component in components]
+        components = [
+            int(component) if is_int(component) else component for component in components
+        ]
 
         if len(components) == 1:
             if is_int(components[0]):
@@ -32,12 +35,16 @@ def resolve(b_override=None):
             continue
 
         if len(components) == 2:
-            data[output] = (lambda x,y: x^65535, components[1], None)
+            data[output] = (lambda x, y: x ^ 65535, components[1], None)
         elif len(components) == 3:
-            data[output] = (gate_identifier[components[1]], components[0], components[2])
+            data[output] = (
+                gate_identifier[components[1]],
+                components[0],
+                components[2],
+            )
 
     if b_override is not None:
-        data['b'] = (b_override, None, None)
+        data["b"] = (b_override, None, None)
 
     while True:
 
@@ -79,7 +86,8 @@ def resolve(b_override=None):
         if not identifier_found:
             break
 
+
 resolve()
-print("Part 1:", data['a'][0])
-resolve(data['a'][0])
-print("Part 2:", data['a'][0])
+print("Part 1:", data["a"][0])
+resolve(data["a"][0])
+print("Part 2:", data["a"][0])

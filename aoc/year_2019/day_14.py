@@ -4,7 +4,6 @@ from typing import Dict, List, Optional, Tuple
 
 
 class Material:
-
     def __init__(self, name: str, count: int) -> None:
         self.name = name
         self.count = count
@@ -16,9 +15,10 @@ class Material:
         return self.__repr__()
 
     @staticmethod
-    def from_string(string) -> 'Material':
+    def from_string(string) -> "Material":
         count_string, name = string.split(" ")
         return Material(name.strip(), int(count_string))
+
 
 class Reaction:
 
@@ -38,7 +38,7 @@ class Reaction:
         return self.__repr__()
 
     @staticmethod
-    def from_input_line(line) -> 'Reaction':
+    def from_input_line(line) -> "Reaction":
         input_materials, output_material = line.split("=>")
         input_materials = input_materials.strip()
         output_material = output_material.strip()
@@ -49,7 +49,12 @@ class Reaction:
         return Reaction(inputs, output)
 
 
-def create_material(material_to_create: str, count_required: int, spares: Dict[str, int], reactions: Dict[str, Reaction]) -> int:
+def create_material(
+    material_to_create: str,
+    count_required: int,
+    spares: Dict[str, int],
+    reactions: Dict[str, Reaction],
+) -> int:
 
     # Base case is ORE
     if material_to_create == "ORE":
@@ -82,13 +87,20 @@ def create_material(material_to_create: str, count_required: int, spares: Dict[s
 
 
 with open("year_2019/input_14.txt") as input_file:
-        contents = input_file.read().strip()
+    contents = input_file.read().strip()
 
-all_reactions = {reaction.output.name: reaction for reaction in [Reaction.from_input_line(line) for line in contents.split("\n")]}
+all_reactions = {
+    reaction.output.name: reaction
+    for reaction in [Reaction.from_input_line(line) for line in contents.split("\n")]
+}
+
 
 def part1():
-    ore_per_unit_fuel = create_material("FUEL", 1, collections.defaultdict(lambda: 0), all_reactions)
+    ore_per_unit_fuel = create_material(
+        "FUEL", 1, collections.defaultdict(lambda: 0), all_reactions
+    )
     print("Part 1:", ore_per_unit_fuel)
+
 
 def part2():
     ONE_TRILLION = 1_000_000_000_000
@@ -98,7 +110,9 @@ def part2():
 
     while True:
         fuel_count_mid = int((fuel_count_high + fuel_count_low) / 2)
-        ore_count_mid = create_material("FUEL", fuel_count_mid, collections.defaultdict(lambda: 0), all_reactions)
+        ore_count_mid = create_material(
+            "FUEL", fuel_count_mid, collections.defaultdict(lambda: 0), all_reactions
+        )
 
         if ore_count_mid > ONE_TRILLION:
             fuel_count_high = fuel_count_mid
@@ -109,6 +123,7 @@ def part2():
             break
 
     print("Part 2:", fuel_count_low)
+
 
 part1()
 part2()

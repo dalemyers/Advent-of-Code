@@ -4,12 +4,14 @@ from typing import Callable, Dict, List, Tuple
 import intcode
 import utility
 
+
 class Tile(enum.Enum):
     EMPTY = 0
     WALL = 1
     BLOCK = 2
     PADDLE = 3
     BALL = 4
+
 
 TILE_COLOR_MAP = {
     Tile.EMPTY: (255, 255, 255),
@@ -20,11 +22,11 @@ TILE_COLOR_MAP = {
 }
 
 TILE_ASCII_MAP = {
-    Tile.EMPTY: ' ',
-    Tile.WALL:  '@',
-    Tile.BLOCK: '#',
-    Tile.PADDLE: '-',
-    Tile.BALL: 'O',
+    Tile.EMPTY: " ",
+    Tile.WALL: "@",
+    Tile.BLOCK: "#",
+    Tile.PADDLE: "-",
+    Tile.BALL: "O",
 }
 
 
@@ -80,12 +82,15 @@ class Screen:
                 count += 1
         return count
 
+
 class Joystick:
 
     ball_position_callback: Callable
     paddle_position_callback: Callable
 
-    def __init__(self, ball_position_callback: Callable, paddle_position_callback: Callable) -> None:
+    def __init__(
+        self, ball_position_callback: Callable, paddle_position_callback: Callable
+    ) -> None:
         self.ball_position_callback = ball_position_callback
         self.paddle_position_callback = paddle_position_callback
 
@@ -116,18 +121,21 @@ with open("year_2019/input_13.txt") as input_file:
 
 input_values = list(map(int, contents.split(",")))
 
-#part1(input_values)
+# part1(input_values)
 
 
 screen = Screen()
 
+
 def get_ball_position() -> Tuple[int, int]:
     return screen.ball_position
 
+
 def get_paddle_position() -> Tuple[int, int]:
-    #print(screen.render_ascii())
+    # print(screen.render_ascii())
     print(screen.score)
     return screen.paddle_position
+
 
 joystick = Joystick(get_ball_position, get_paddle_position)
 

@@ -1,4 +1,3 @@
-
 with open("year_2015/input_01.txt") as f:
     contents = f.read()
 
@@ -21,4 +20,3 @@ for index, character in enumerate(contents):
     if floor == -1:
         print("Part 2:", index + 1)
         break
-

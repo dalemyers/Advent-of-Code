@@ -4,6 +4,7 @@ from shared import read_file_lines
 
 contents = read_file_lines("year_2020/input_14.txt")
 
+
 def mask1(value, bit_mask):
     binary_value = bin(int(value))[2:].zfill(36)
     output = ""
@@ -30,7 +31,7 @@ def mask2(value, bit_mask):
 
 def generate_addresses(address):
     characters = len([c for c in address if c == "x"])
-    replacement = [0]*characters
+    replacement = [0] * characters
 
     while True:
         output = ""
@@ -51,9 +52,8 @@ def generate_addresses(address):
             return
 
 
-
 def part1():
-    bit_mask = "x"*36
+    bit_mask = "x" * 36
     memory = {}
     for line in contents:
         components = line.split(" = ")
@@ -71,8 +71,9 @@ def part1():
 
     return total
 
+
 def part2():
-    bit_mask = "x"*36
+    bit_mask = "x" * 36
     memory = {}
     for line in contents:
         components = line.split(" = ")
@@ -91,6 +92,7 @@ def part2():
         total += value
 
     return total
+
 
 print("Part 1:", part1())
 print("Part 2:", part2())

@@ -1,6 +1,6 @@
-
 with open("year_2015/input_08.txt") as f:
     contents = f.read()
+
 
 def part1():
     total_code = 0
@@ -9,7 +9,7 @@ def part1():
     for line in contents.splitlines():
         code_count = 2
         line = line[1:-1]
-        
+
         i = -1
         while True:
             i += 1
@@ -21,13 +21,13 @@ def part1():
                 continue
 
             # We know that we've hit an escape sequence here
-            if line[i+1] in ['"', "\\"]:
-                line = line[:i] + line[i+1:]
+            if line[i + 1] in ['"', "\\"]:
+                line = line[:i] + line[i + 1 :]
                 code_count += 1
                 continue
 
-            if line[i+1] == "x":
-                line = line[:i] + "#" + line[i+3:]
+            if line[i + 1] == "x":
+                line = line[:i] + "#" + line[i + 3 :]
                 code_count += 3
                 continue
 
@@ -53,7 +53,7 @@ def part2():
 
             c = line[i]
             if c in ['"', "\\"]:
-                line = line[:i] + '\\' + line[i:]
+                line = line[:i] + "\\" + line[i:]
                 i += 1
                 continue
 

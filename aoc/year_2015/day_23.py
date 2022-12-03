@@ -3,7 +3,7 @@ import re
 with open("year_2015/input_23.txt") as f:
     contents = f.readlines()
 
-'''
+"""
 hlf a
 inc a
 inc b
@@ -14,12 +14,12 @@ jmp -7
 jmp +19
 jmp +2
 tpl a
-'''
+"""
+
 
 class Computer:
-
     def __init__(self, a_init=0, b_init=0):
-        self.registers = {'a': a_init, 'b': b_init}
+        self.registers = {"a": a_init, "b": b_init}
 
     def run_instruction(self, instruction, arguments):
         if instruction == "hlf":
@@ -37,6 +37,7 @@ class Computer:
             if self.registers[arguments[0]] == 1:
                 return arguments[1]
         return 1
+
 
 def get_instructions():
     output = []
@@ -59,8 +60,6 @@ def get_instructions():
     return output
 
 
-
-
 def part1():
     instructions = get_instructions()
     computer = Computer()
@@ -74,7 +73,7 @@ def part1():
         offset = computer.run_instruction(instruction, args)
         pc += offset
 
-    return computer.registers['b']
+    return computer.registers["b"]
 
 
 def part2():
@@ -90,7 +89,8 @@ def part2():
         offset = computer.run_instruction(instruction, args)
         pc += offset
 
-    return computer.registers['b']
+    return computer.registers["b"]
+
 
 print("Part 1:", part1())
 print("Part 2:", part2())

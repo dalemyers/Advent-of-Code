@@ -4,6 +4,7 @@ from shared import read_file_lines
 
 contents = read_file_lines("year_2020/input_11.txt")
 
+
 class State(enum.Enum):
     floor = "."
     empty = "L"
@@ -43,6 +44,7 @@ def print_grid(grid):
         print("".join([s.value for s in row]))
     print()
 
+
 def get_occupied_count(grid):
     count = 0
     for y in range(len(grid)):
@@ -50,6 +52,7 @@ def get_occupied_count(grid):
             if grid[y][x] == State.occupied:
                 count += 1
     return count
+
 
 def _iterate_sequence(sequence, start_index):
     index = start_index
@@ -62,7 +65,7 @@ def _iterate_sequence(sequence, start_index):
             if sequence[index] == State.occupied:
                 count += 1
             break
-    
+
     index = start_index
     while True:
         index -= 1
@@ -74,6 +77,7 @@ def _iterate_sequence(sequence, start_index):
             break
 
     return count
+
 
 def _get_diagonal1(grid, x, y):
     start_location = 0
@@ -170,6 +174,7 @@ def part1():
 
     return get_occupied_count(state)
 
+
 def part2():
     state = get_state()
     print_grid(state)
@@ -191,6 +196,7 @@ def part2():
             break
 
     return get_occupied_count(state)
+
 
 print("Part 1:", part1())
 print("Part 2:", part2())

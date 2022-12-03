@@ -19,6 +19,7 @@ def load_grid(contents) -> List[List[int]]:
 
     return grid
 
+
 def detections(grid, x, y) -> int:
 
     points_in_angle = {}
@@ -40,6 +41,7 @@ def detections(grid, x, y) -> int:
 
 
 grid = load_grid(contents)
+
 
 def get_max_detections_location(grid):
     max_detections = 0
@@ -88,6 +90,7 @@ def vaporize(grid, location):
                 continue
             if counter == 200:
                 return asteroid
+
 
 location, detection_count = get_max_detections_location(grid)
 print("Part 1:", location, detection_count)

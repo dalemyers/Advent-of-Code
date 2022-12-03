@@ -14,7 +14,7 @@ while True:
             break
         if password[index] == "{":
             password[index] = "a"
-            password[index - 1] = chr(ord(password[index-1]) + 1)
+            password[index - 1] = chr(ord(password[index - 1]) + 1)
         else:
             break
     if "i" in password:
@@ -25,9 +25,11 @@ while True:
         continue
 
     has_sequence = False
-    for i in range(len(password)-2):
-        substring = password[i:i+3]
-        if ord(substring[0]) + 1 == ord(substring[1]) and ord(substring[0]) + 2 == ord(substring[2]):
+    for i in range(len(password) - 2):
+        substring = password[i : i + 3]
+        if ord(substring[0]) + 1 == ord(substring[1]) and ord(substring[0]) + 2 == ord(
+            substring[2]
+        ):
             has_sequence = True
             break
 
@@ -36,7 +38,7 @@ while True:
 
     pair1 = None
     has_pair = False
-    for a,b in zip(password, password[1:]):
+    for a, b in zip(password, password[1:]):
         if a != b:
             continue
         if pair1 is None:

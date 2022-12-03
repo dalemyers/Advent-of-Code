@@ -1,4 +1,3 @@
-
 with open("year_2015/input_02.txt") as f:
     contents = f.read()
 

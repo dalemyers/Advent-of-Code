@@ -4,12 +4,13 @@ from shared import read_file_lines
 
 contents = read_file_lines("year_2016/input_10.txt")
 
+
 class Location(enum.Enum):
     bot = 1
     output = 2
 
-class Bot:
 
+class Bot:
     def __init__(self):
         self.values = []
 
@@ -38,21 +39,20 @@ class Bot:
     def __str__(self):
         return self.__repr__()
 
-class ValueInstruction:
 
+class ValueInstruction:
     def __init__(self, value, bot):
         self.value = value
         self.bot = bot
 
     @staticmethod
     def from_line(line):
-        line = line[len("value "):]
+        line = line[len("value ") :]
         values = list(map(int, line.split(" goes to bot ")))
         return ValueInstruction(*values)
 
 
 class GiveInstruction:
-
     def __init__(self, holder, low, high):
         self.holder = holder
         self.low = low
@@ -133,16 +133,11 @@ def part1():
                 bots[high[0]].add_value(bot.high())
 
     print()
-    
-
-
-    
-
-
 
 
 def part2():
     pass
+
 
 print("Part 1:", part1())
 print("Part 2:", part2())

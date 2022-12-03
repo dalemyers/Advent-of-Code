@@ -6,10 +6,12 @@ with open("year_2015/input_14.txt") as f:
     input_data = f.read()
 
 # Prancer can fly 9 km/s for 12 seconds, but then must rest for 97 seconds.
-pattern = re.compile(r"(.*) can fly (\d*) km\/s for (\d*) seconds, but then must rest for (\d*) seconds\.")
+pattern = re.compile(
+    r"(.*) can fly (\d*) km\/s for (\d*) seconds, but then must rest for (\d*) seconds\."
+)
+
 
 class Reindeer:
-
     def __init__(self, name, speed, duration, rest_time):
         self.name = name
         self.speed = speed
@@ -43,6 +45,7 @@ class Reindeer:
         rest_time = int(match.group(4))
         return Reindeer(name, speed, duration, rest_time)
 
+
 reindeers = {}
 scores = {}
 
@@ -68,5 +71,10 @@ for i in range(2503):
         print(name, scores[name], end=" | ")
     print()
 
-print("Part 1:", sorted([(r.name, r.distance_travelled) for r in reindeers.values()], key=lambda x: -x[1])[0][1])
+print(
+    "Part 1:",
+    sorted([(r.name, r.distance_travelled) for r in reindeers.values()], key=lambda x: -x[1],)[
+        0
+    ][1],
+)
 print("Part 2:", sorted(list(scores.values()), reverse=True)[0])

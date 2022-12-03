@@ -17,7 +17,11 @@ def evaluate_ltr(expression):
 def evaluate_operator(expression, operator, function):
     while operator in expression:
         location = expression.index(operator)
-        expression = expression[:location-1] + [function(int(expression[location-1]), int(expression[location+1]))] + expression[location+2:]
+        expression = (
+            expression[: location - 1]
+            + [function(int(expression[location - 1]), int(expression[location + 1]))]
+            + expression[location + 2 :]
+        )
     return expression
 
 
@@ -34,14 +38,14 @@ def evaluate_precedence(expression, ltr_order=False):
             continue
 
         paren_count = 1
-        for j in range(i+1, len(expression)):
+        for j in range(i + 1, len(expression)):
             j_term = expression[j]
             if j_term == "(":
                 paren_count += 1
             elif j_term == ")":
                 paren_count -= 1
             if paren_count == 0:
-                output.append(evaluate_precedence(expression[i+1:j], ltr_order))
+                output.append(evaluate_precedence(expression[i + 1 : j], ltr_order))
                 i = j
                 break
 
@@ -75,6 +79,7 @@ def part2():
     for line in contents:
         total += evaluate_string(line, False)
     return total
+
 
 if __name__ == "__main__":
     print("Part 1:", part1())

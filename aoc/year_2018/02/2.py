@@ -12,11 +12,11 @@ def check(ids):
                         break
                     position = i
             if position is not None:
-                print(one[:position] + one[position+1:])
+                print(one[:position] + one[position + 1 :])
                 sys.exit(1)
 
 
-with open('02/input.txt') as input_file:
+with open("02/input.txt") as input_file:
     ids = [line.strip() for line in input_file.readlines()]
 
 

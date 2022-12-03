@@ -1,6 +1,7 @@
 import itertools
 import sys
 
+
 def solve(iterations):
     input_value = "1113122113"
 
@@ -26,6 +27,7 @@ def solve(iterations):
         input_value = output
 
     return len(output)
+
 
 print("Part 1:", solve(40))
 print("Part 1:", solve(50))

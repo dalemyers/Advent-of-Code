@@ -25,13 +25,14 @@ for line in input_data.splitlines():
         data[person1] = {}
     data[person1][person2] = delta
 
+
 def part1():
     people = list(data.keys())
 
     max_happiness = 0
     permutations = list(itertools.permutations(people))
     for index, permutation in enumerate(permutations):
-        print(index,"/", len(permutations))
+        print(index, "/", len(permutations))
         permutation = list(permutation)
         p_total = 0
         for p1, p2 in zip(permutation, permutation[1:] + [permutation[0]]):
@@ -43,13 +44,14 @@ def part1():
 
     return max_happiness
 
+
 def part2():
     people = list(data.keys()) + ["me"]
 
     max_happiness = 0
     permutations = list(itertools.permutations(people))
     for index, permutation in enumerate(permutations):
-        print(index,"/", len(permutations))
+        print(index, "/", len(permutations))
         permutation = list(permutation)
         p_total = 0
         for p1, p2 in zip(permutation, permutation[1:] + [permutation[0]]):
@@ -62,6 +64,7 @@ def part2():
             max_happiness = p_total
 
     return max_happiness
+
 
 print("Part 1:", part1())
 print("Part 2:", part2())

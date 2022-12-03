@@ -164,9 +164,7 @@ PACKET_MAP = {
 }
 
 
-def parse_packets(
-    stream: BitStream, *, max_packets: Optional[int] = None
-) -> List[Packet]:
+def parse_packets(stream: BitStream, *, max_packets: Optional[int] = None) -> List[Packet]:
 
     packets = []
 

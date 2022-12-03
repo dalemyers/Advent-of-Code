@@ -7,10 +7,12 @@ from shared import read_file_lines, print_raw_grid, render_bw_grid
 
 contents = read_file_lines("year_2020/input_20.txt")
 
+
 class Flip(enum.Enum):
     none = "none"
     horizontal = "horizontal"
     vertical = "vertical"
+
 
 class Rotation(enum.Enum):
     none = 0
@@ -55,6 +57,7 @@ def get_borders(tiles):
         borders[tile_id] = tile_borders
 
     return borders
+
 
 def opposite_index(index):
     return {
@@ -108,7 +111,6 @@ def top_index_for_left_border(border):
     }[border]
 
 
-
 def left_index_for_top_border(border):
     return {
         0: 2,
@@ -120,7 +122,6 @@ def left_index_for_top_border(border):
         6: 1,
         7: 5,
     }[border]
-
 
 
 def get_next_in_row(current, length, pairs):
@@ -142,7 +143,6 @@ def get_rows(borders, pairs, length):
         for i in range(len(t1)):
             row = [(t1_id, i)]
             yield from get_next_in_row(row, length, pairs)
-
 
 
 def build_pairs(borders):
@@ -187,7 +187,6 @@ def perform_rotation(operation, tile):
     return rotated
 
 
-
 def perform_operations(tile, operations):
     for operation in operations:
         if isinstance(operation, Flip):
@@ -210,7 +209,9 @@ def get_next_row(previous_row, borders, pairs, used_ids):
             break
 
         elif len(matches) == 1:
-            current_tile_id, current_tile_left_index = matches[0][0], left_index_for_top_border(matches[0][1])
+            current_tile_id, current_tile_left_index = matches[0][0], left_index_for_top_border(
+                matches[0][1]
+            )
 
             if current_tile_id in used_ids:
                 output = []
@@ -257,9 +258,11 @@ def get_count_for_solution(tiles, borders, dimension, pairs, solution):
             for tile_row in tile_contents:
                 borderless_contents.append(tile_row[1:-1])
             borderless_contents = borderless_contents[1:-1]
-            borderless_contents = perform_operations(borderless_contents, borders[tile[0]][tile[1]][1])
+            borderless_contents = perform_operations(
+                borderless_contents, borders[tile[0]][tile[1]][1]
+            )
             borderless_row.append(borderless_contents)
-            
+
         borderless.append(borderless_row)
 
     original_water = []
@@ -277,7 +280,6 @@ def get_count_for_solution(tiles, borders, dimension, pairs, solution):
     ]
     monster_height = len(monster)
     monster_width = len(monster[0])
-
 
     for flip in list(Flip):
         for rotation in list(Rotation):
@@ -300,7 +302,7 @@ def get_count_for_solution(tiles, borders, dimension, pairs, solution):
                     for y in range(monster_height):
                         for x in range(monster_width):
                             if monster[y][x] == "#":
-                                if water[r_index+y][c_index+x] != "#":
+                                if water[r_index + y][c_index + x] != "#":
                                     not_monster = True
                                     break
 
@@ -317,7 +319,7 @@ def get_count_for_solution(tiles, borders, dimension, pairs, solution):
                 continue
 
             monster_grid = [[" " for _ in range(len(water[i]))] for i in range(len(water))]
-            for y,x in monster_coordinates:
+            for y, x in monster_coordinates:
                 for y_index in range(y, y + monster_height):
                     for x_index in range(x, x + monster_width):
                         if monster[y_index - y][x_index - x] == "#":
@@ -333,7 +335,6 @@ def get_count_for_solution(tiles, borders, dimension, pairs, solution):
     return None
 
 
-
 def part1():
     tiles = get_tiles()
     borders = get_borders(tiles)
@@ -341,7 +342,6 @@ def part1():
     pairs = build_pairs(borders)
     rows = next(get_unique_rows(borders, pairs, dimension))
     return rows[0][0][0] * rows[0][-1][0] * rows[-1][0][0] * rows[-1][-1][0]
-
 
 
 def part2():

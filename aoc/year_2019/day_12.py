@@ -3,6 +3,7 @@ from math import gcd
 import re
 from typing import List, Optional, Tuple
 
+
 class Moon:
 
     name: str
@@ -45,6 +46,7 @@ class Moon:
     def __str__(self) -> str:
         return self.__repr__()
 
+
 def compare_position(moon1, moon2) -> int:
     if moon2 > moon1:
         return 1
@@ -52,6 +54,7 @@ def compare_position(moon1, moon2) -> int:
         return 0
     else:
         return -1
+
 
 def update_positions(all_moons: List[Moon]) -> None:
     for moon in all_moons:
@@ -71,7 +74,7 @@ def run_system(all_moons: List[Moon], steps: int) -> None:
 
     while True:
         update_positions(all_moons)
-        
+
         print(f"After {step} steps:")
         for moon in all_moons:
             print(moon)
@@ -92,6 +95,7 @@ def run_system(all_moons: List[Moon], steps: int) -> None:
 
 def lcm(a, b):
     return int(a * b / gcd(a, b))
+
 
 def lcms(*numbers):
     return reduce(lcm, numbers)
@@ -137,7 +141,7 @@ def find_period(all_moons: List[Moon]) -> Optional[int]:
     return lcms(x_period, y_period, z_period)
 
 
-with open('year_2019/input_12.txt') as input_file:
+with open("year_2019/input_12.txt") as input_file:
     contents = input_file.read().strip()
 
 lines = contents.split("\n")

@@ -1,5 +1,6 @@
 import math
 
+
 def hash_to_bool(input_lines):
     output = []
     for line in input_lines:
@@ -12,6 +13,7 @@ def hash_to_bool(input_lines):
                 output_line.append(True)
         output.append(output_line)
     return output
+
 
 def extend(input_trees, x_delta, y_delta):
     output = []
@@ -27,6 +29,7 @@ with open("year_2020/input_03.txt") as input_file:
 
 trees = hash_to_bool(contents)
 
+
 def check_collisions(x_delta, y_delta):
     x = -x_delta
     y = -y_delta
@@ -39,13 +42,13 @@ def check_collisions(x_delta, y_delta):
         y += y_delta
         if y >= len(extended_trees):
             return count
-        #if x > len(extended_trees[y]):
+        # if x > len(extended_trees[y]):
         #    x = 0
         if extended_trees[y][x]:
             count += 1
 
 
-def part1(x_delta = 3, y_delta = 1):
+def part1(x_delta=3, y_delta=1):
     return check_collisions(3, 1)
 
 
@@ -55,7 +58,7 @@ def part2():
     v3 = check_collisions(5, 1)
     v4 = check_collisions(7, 1)
     v5 = check_collisions(1, 2)
-    return v1*v2*v3*v4*v5
+    return v1 * v2 * v3 * v4 * v5
 
 
 print("Part 1:", part1())

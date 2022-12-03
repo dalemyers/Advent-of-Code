@@ -2,6 +2,7 @@ import enum
 import operator
 from typing import Callable, Dict, List, Set, Tuple
 
+
 class Direction(enum.Enum):
     up = "U"
     down = "D"
@@ -14,6 +15,7 @@ class Direction(enum.Enum):
         elif self in [Direction.down, Direction.left]:
             return operator.sub
 
+
 class Instruction:
 
     direction: Direction
@@ -25,6 +27,7 @@ class Instruction:
 
     def __repr__(self) -> str:
         return f"{self.direction.value}{self.distance}"
+
 
 def parse_line(line: str) -> List[Instruction]:
     instructions = line.strip().split(",")
@@ -73,7 +76,7 @@ for key, value in locations.items():
         continue
 
     x_str, y_str = key.split("/")
-    x ,y = int(x_str), int(y_str)
+    x, y = int(x_str), int(y_str)
 
     if x == 0 and y == 0:
         continue
@@ -88,7 +91,12 @@ print(distances[0])
 ########
 
 
-def plot_wire(wire: List[Instruction], identifier: int, locations: Dict[str, Set[int]], intersection: Optional[Tuple[int, int]] = None) -> int:
+def plot_wire(
+    wire: List[Instruction],
+    identifier: int,
+    locations: Dict[str, Set[int]],
+    intersection: Optional[Tuple[int, int]] = None,
+) -> int:
     x = 0
     y = 0
     distance = 0
@@ -129,6 +137,7 @@ def plot_wire(wire: List[Instruction], identifier: int, locations: Dict[str, Set
             x += delta
 
     return distance
+
 
 locations = {}
 

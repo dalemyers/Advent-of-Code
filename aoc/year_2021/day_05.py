@@ -38,9 +38,7 @@ def get_visited(
             y_step = 1 if ey > sy else -1
             x_step = 1 if ex > sx else -1
 
-            for y, x in zip(
-                range(sy, ey + y_step, y_step), range(sx, ex + x_step, x_step)
-            ):
+            for y, x in zip(range(sy, ey + y_step, y_step), range(sx, ex + x_step, x_step)):
                 visited[y][x] += 1
 
     return visited

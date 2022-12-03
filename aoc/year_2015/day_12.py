@@ -6,6 +6,7 @@ from shared import is_int
 with open("year_2015/input_12.txt") as f:
     input_data = json.load(f)
 
+
 def part1():
     def calc_dictionary(data):
         total = 0
@@ -38,7 +39,6 @@ def part1():
 
 
 def part2():
-
     class RedException(Exception):
         pass
 
@@ -66,7 +66,7 @@ def part2():
     def calc(data):
         if is_int(data):
             return int(data)
-        
+
         try:
             if isinstance(data, list):
                 return calc_array(data)
@@ -78,6 +78,7 @@ def part2():
             return 0
 
     return calc(input_data)
+
 
 print("Part 1:", part1())
 print("Part 2:", part2())

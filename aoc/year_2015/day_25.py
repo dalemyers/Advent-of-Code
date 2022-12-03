@@ -9,7 +9,7 @@ MAX_INDEX = max(ROW, COLUMN)
 
 
 def part1():
-    grid = create_int_grid(MAX_INDEX*2 + 1, MAX_INDEX*2 + 1)
+    grid = create_int_grid(MAX_INDEX * 2 + 1, MAX_INDEX * 2 + 1)
     x = 1
     y = 1
 
@@ -24,7 +24,7 @@ def part1():
             y = y_max
             x = 1
             continue
-        if y > MAX_INDEX*2 or x > MAX_INDEX*2:
+        if y > MAX_INDEX * 2 or x > MAX_INDEX * 2:
             break
         grid[y][x] = value
         value = (value * 252_533) % 33_554_393
@@ -32,6 +32,7 @@ def part1():
         y -= 1
 
     return grid[ROW][COLUMN]
+
 
 def part2():
     return None

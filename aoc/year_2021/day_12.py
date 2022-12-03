@@ -34,9 +34,7 @@ def find_routes(
                     continue
 
         routes.extend(
-            find_routes(
-                connections, next_location, visited + [next_location], two_visits
-            )
+            find_routes(connections, next_location, visited + [next_location], two_visits)
         )
 
     return routes

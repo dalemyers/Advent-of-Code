@@ -3,6 +3,7 @@ from shared import read_file_lines
 
 contents = read_file_lines("year_2020/input_07.txt")
 
+
 def parse_bag(bag_text):
     """
     light red bags contain 1 bright white bag, 2 muted yellow bags.
@@ -74,6 +75,7 @@ def part1():
         if bag_contains("shiny gold", containers):
             count += 1
     return count
+
 
 def part2():
     return bag_count("shiny gold")

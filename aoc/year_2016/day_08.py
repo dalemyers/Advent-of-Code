@@ -3,9 +3,11 @@ from shared import read_file_lines, create_bool_grid, render_bw_grid
 
 contents = read_file_lines("year_2016/input_08.txt")
 
+
 class Section(enum.Enum):
     row = 1
     column = 2
+
 
 class Direction(enum.Enum):
     x = 1
@@ -47,7 +49,7 @@ def part1():
         else:
             section = Section.column
             row = row[7:]
-        
+
         # Drop 'x=' or 'y='
         row = row[2:]
 
@@ -65,8 +67,10 @@ def part1():
 
     return counter
 
+
 def part2():
     raise Exception("Interactive from part 1")
+
 
 print("Part 1:", part1())
 print("Part 2:", part2())

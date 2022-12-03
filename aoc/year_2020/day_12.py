@@ -4,6 +4,7 @@ from shared import read_file_lines
 
 contents = read_file_lines("year_2020/input_12.txt")
 
+
 class Direction(enum.Enum):
     north = "N"
     east = "E"
@@ -14,10 +15,30 @@ class Direction(enum.Enum):
         angle = int(angle % 360)
         angle = int(angle / 90)
         lookup = {
-            Direction.north: [Direction.north, Direction.east, Direction.south, Direction.west],
-            Direction.east: [Direction.east, Direction.south, Direction.west, Direction.north],
-            Direction.south: [Direction.south, Direction.west, Direction.north, Direction.east],
-            Direction.west: [Direction.west, Direction.north, Direction.east, Direction.south],
+            Direction.north: [
+                Direction.north,
+                Direction.east,
+                Direction.south,
+                Direction.west,
+            ],
+            Direction.east: [
+                Direction.east,
+                Direction.south,
+                Direction.west,
+                Direction.north,
+            ],
+            Direction.south: [
+                Direction.south,
+                Direction.west,
+                Direction.north,
+                Direction.east,
+            ],
+            Direction.west: [
+                Direction.west,
+                Direction.north,
+                Direction.east,
+                Direction.south,
+            ],
         }
         return lookup[self][angle]
 
@@ -57,6 +78,7 @@ def part1():
 
     return abs(x) + abs(y)
 
+
 def part2():
     direction = Direction.east
     wx, wy = 10, -1
@@ -85,7 +107,6 @@ def part2():
             wx -= magnitude
 
     return abs(x) + abs(y)
-
 
 
 print("Part 1:", part1())

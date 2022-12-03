@@ -5,7 +5,6 @@ from shared import read_file_lines
 contents = read_file_lines("year_2020/input_13.txt")
 
 
-
 def part1():
     earliest_departure = int(contents[0])
     buses = sorted([int(c) for c in contents[1].split(",") if c != "x"])
@@ -17,6 +16,7 @@ def part1():
 
     quickest = min(waits, key=lambda x: x[0])
     return quickest[0] * quickest[1]
+
 
 def is_prime(x):
     for i in range(2, x):
@@ -38,10 +38,11 @@ def solve_for_buses(index, a, a_offset, b, b_offset):
                 return factor, b_fact
 
 
-
 def part2():
     buses = [int(c) if c != "x" else -1 for c in contents[1].split(",")]
-    offsets = sorted([(c, offset) for (offset, c) in enumerate(buses) if c != -1], key=lambda x:x[0])
+    offsets = sorted(
+        [(c, offset) for (offset, c) in enumerate(buses) if c != -1], key=lambda x: x[0]
+    )
 
     increment_by = offsets[0][0]
     offsets = offsets[1:]
@@ -60,6 +61,7 @@ def part2():
             timestamp += increment_by
 
     return current_offset
+
 
 print("Part 1:", part1())
 print("Part 2:", part2())

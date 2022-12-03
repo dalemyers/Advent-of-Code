@@ -10,7 +10,7 @@ while True:
     counter += 1
     data = key + str(counter)
     md5 = hashlib.md5()
-    md5.update(data.encode('utf-8'))
+    md5.update(data.encode("utf-8"))
     digest = md5.digest().hex()
     if not part1_found and digest.startswith("00000"):
         part1_found = True

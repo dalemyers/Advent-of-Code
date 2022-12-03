@@ -30,6 +30,7 @@ def part1():
 
     return output
 
+
 def part2():
 
     counters = []

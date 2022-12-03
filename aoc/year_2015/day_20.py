@@ -1,5 +1,6 @@
 input_value = 29_000_000
 
+
 def part1():
     size = int(input_value / 10)
     house = [0] * size
@@ -30,6 +31,7 @@ def part2():
             return index
 
     return None
+
 
 print("Part 1:", part1())
 print("Part 2:", part2())

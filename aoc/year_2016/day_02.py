@@ -6,14 +6,9 @@ with open("year_2016/input_02.txt") as f:
     contents = f.readlines()
 
 
-
 def part1():
 
-    keypad = [
-        [1, 2, 3],
-        [4, 5, 6],
-        [7, 8, 9]
-    ]
+    keypad = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 
     code = []
 
@@ -49,13 +44,14 @@ def part1():
 
     return code
 
+
 def part2():
     keypad = [
         [None, None, 1, None, None],
         [None, 2, 3, 4, None],
         [5, 6, 7, 8, 9],
-        [None, 'A', 'B', 'C', None],
-        [None, None, 'D', None, None],
+        [None, "A", "B", "C", None],
+        [None, None, "D", None, None],
     ]
 
     code = []

@@ -1,4 +1,3 @@
-
 with open("year_2015/input_03.txt") as f:
     contents = f.read()
 
@@ -35,10 +34,7 @@ for x_index, column in grid.items():
 print("Part 1:", total)
 
 
-positions = {
-    True: [0, 0],
-    False: [0, 0]
-}
+positions = {True: [0, 0], False: [0, 0]}
 
 grid = {}
 grid[0] = {}

@@ -1,6 +1,11 @@
 from collections import defaultdict
 import copy
-from shared import read_file_lines, create_bool_grid_from_contents, print_grid_3d_dict, print_grid_3d
+from shared import (
+    read_file_lines,
+    create_bool_grid_from_contents,
+    print_grid_3d_dict,
+    print_grid_3d,
+)
 
 contents = read_file_lines("year_2020/input_17.txt")
 input_grid = create_bool_grid_from_contents(contents)
@@ -50,11 +55,13 @@ def get_surrounding_4d(grid, c, z, y, x):
 def empty_row(length):
     return ["." for _ in range(length)]
 
+
 def empty_plane(length):
     output = []
     for _ in range(length):
         output.append(empty_row(length))
     return output
+
 
 def empty_cube(length):
     output = []
@@ -88,7 +95,7 @@ def part1():
                     else:
                         if surrounding == 3:
                             buffer[pi][ri][ci] = "#"
-        #print_grid_3d(buffer, -CYCLES)
+        # print_grid_3d(buffer, -CYCLES)
         grid = buffer
 
     active_count = 0
@@ -99,8 +106,6 @@ def part1():
                     active_count += 1
 
     return active_count
-
-
 
 
 def part2():

@@ -1,4 +1,3 @@
-
 with open("year_2015/input_05.txt") as f:
     contents = f.read()
 
@@ -34,9 +33,9 @@ for string in contents.splitlines():
     has_next_gap = False
 
     for index in range(0, len(string) - 1):
-        pair = string[index:index + 2]
+        pair = string[index : index + 2]
         left = string[:index]
-        right = string[index + 2:]
+        right = string[index + 2 :]
         l_pos = left.find(pair)
         r_pos = right.find(pair)
         if l_pos != -1 or r_pos != -1:

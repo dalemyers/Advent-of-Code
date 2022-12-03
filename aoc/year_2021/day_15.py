@@ -34,9 +34,7 @@ def get_path_cost(grid: List[List[int]]) -> int:
         if current == end:
             break
 
-        children = get_surrounding_points(
-            current[0], current[1], grid, height=height, width=width
-        )
+        children = get_surrounding_points(current[0], current[1], grid, height=height, width=width)
 
         for child in children:
             weight = grid[child[0]][child[1]]

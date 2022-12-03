@@ -5,6 +5,7 @@ import utility
 
 BASE_PATTERN = [0, 1, 0, -1]
 
+
 def generate_pattern(count, offset) -> Iterator[int]:
     index = math.floor(offset / count)
     offset_remainder = offset - (index * 4) + 1
@@ -15,21 +16,19 @@ def generate_pattern(count, offset) -> Iterator[int]:
         offset_remainder = 0
         index += 1
 
+
 def run_pass(input_values: List[int]) -> List[int]:
     output = []
 
     for pass_index in range(0, len(input_values)):
-        pairs = zip(
-            input_values[pass_index:], 
-            generate_pattern(pass_index + 1, pass_index)
-        )
+        pairs = zip(input_values[pass_index:], generate_pattern(pass_index + 1, pass_index))
         total = 0
         outputs = []
         for a, b in pairs:
             outputs.append(f"{a}*{b:<2}")
             total += a * b
         result = abs(total) % 10
-        #print(" + ".join(outputs) + f" = {result}")
+        # print(" + ".join(outputs) + f" = {result}")
         yield result
 
 
@@ -51,16 +50,6 @@ values = list(reversed(input_values))
 offset = int("".join(map(str, input_values[:7])))
 
 for i in range(0, 100):
-    values = list(
-        islice(
-            accumulate(
-                values,
-                lambda a,b: (a + b) % 10
-            ), 
-            len(input_values) - offset
-        )
-    )
+    values = list(islice(accumulate(values, lambda a, b: (a + b) % 10), len(input_values) - offset))
 
 print("Part 2:", "".join(map(str, list(reversed(values))[:8])))
-
-

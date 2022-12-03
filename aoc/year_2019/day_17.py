@@ -4,9 +4,11 @@ from typing import List, Optional, Tuple
 import intcode
 import utility
 
+
 class Turn(enum.Enum):
-    RIGHT = 'R'
-    LEFT = 'L'
+    RIGHT = "R"
+    LEFT = "L"
+
 
 class Direction(enum.Enum):
     UP = "^"
@@ -14,7 +16,7 @@ class Direction(enum.Enum):
     LEFT = "<"
     RIGHT = ">"
 
-    def opposite(self) -> 'Direction':
+    def opposite(self) -> "Direction":
         if self == Direction.UP:
             return Direction.DOWN
         if self == Direction.DOWN:
@@ -24,10 +26,10 @@ class Direction(enum.Enum):
         if self == Direction.RIGHT:
             return Direction.LEFT
 
-    def is_opposite(self, direction: 'Direction') -> bool:
+    def is_opposite(self, direction: "Direction") -> bool:
         return self == direction.opposite()
 
-    def turn_to_commands(self, direction: 'Direction') -> Turn:
+    def turn_to_commands(self, direction: "Direction") -> Turn:
         if self == direction:
             raise Exception("Already facing direction")
 
@@ -58,14 +60,16 @@ class Direction(enum.Enum):
             elif direction == Direction.DOWN:
                 return Turn.LEFT
 
+
 class Camera:
 
     output: List[List[str]]
     current_row: List[str]
     computer: intcode.Computer
 
-
-    def __init__(self, input_values: List[int], enable_robot: bool = False, input_callback = None) -> None:
+    def __init__(
+        self, input_values: List[int], enable_robot: bool = False, input_callback=None
+    ) -> None:
         self.computer = intcode.Computer(program=input_values)
         self.computer.output_callback = self.render_character
         self.computer.input_callback = input_callback
@@ -92,6 +96,7 @@ class Camera:
             self.output.append(self.current_row)
             self.current_row = []
 
+
 def part1(input_values) -> None:
     camera = Camera(input_values)
     camera.run()
@@ -103,10 +108,10 @@ def part1(input_values) -> None:
             if camera.output[y][x] == "#":
                 try:
                     neighbors = ""
-                    neighbors += camera.output[y][x-1]
-                    neighbors += camera.output[y][x+1]
-                    neighbors += camera.output[y-1][x]
-                    neighbors += camera.output[y+1][x]
+                    neighbors += camera.output[y][x - 1]
+                    neighbors += camera.output[y][x + 1]
+                    neighbors += camera.output[y - 1][x]
+                    neighbors += camera.output[y + 1][x]
                     if neighbors == "####":
                         intersections.append((x, y))
                 except:
@@ -157,41 +162,55 @@ class Pathfinder:
                 return ord(self.full_output.pop(0))
             else:
                 self.input_mode = InputMode.A
-                return ord('\n')
+                return ord("\n")
 
         if self.input_mode == InputMode.A:
             if len(self.a) > 0:
                 return ord(self.a.pop(0))
             else:
                 self.input_mode = InputMode.B
-                return ord('\n')
+                return ord("\n")
 
         if self.input_mode == InputMode.B:
             if len(self.b) > 0:
                 return ord(self.b.pop(0))
             else:
                 self.input_mode = InputMode.C
-                return ord('\n')
+                return ord("\n")
 
         if self.input_mode == InputMode.C:
             if len(self.c) > 0:
                 return ord(self.c.pop(0))
             else:
-                return ord('\n')
+                return ord("\n")
 
         return 0
 
-    def determine_next_direction(self, previous_direction: Optional[Direction] = None) -> Optional[Direction]:
-        if previous_direction != Direction.LEFT and self.camera.get_character(self.x+1, self.y) == '#':
+    def determine_next_direction(
+        self, previous_direction: Optional[Direction] = None
+    ) -> Optional[Direction]:
+        if (
+            previous_direction != Direction.LEFT
+            and self.camera.get_character(self.x + 1, self.y) == "#"
+        ):
             return Direction.RIGHT
 
-        if previous_direction != Direction.RIGHT and self.camera.get_character(self.x-1, self.y) == '#':
+        if (
+            previous_direction != Direction.RIGHT
+            and self.camera.get_character(self.x - 1, self.y) == "#"
+        ):
             return Direction.LEFT
 
-        if previous_direction != Direction.UP and self.camera.get_character(self.x, self.y+1) == '#':
+        if (
+            previous_direction != Direction.UP
+            and self.camera.get_character(self.x, self.y + 1) == "#"
+        ):
             return Direction.DOWN
 
-        if previous_direction != Direction.DOWN and self.camera.get_character(self.x, self.y-1) == '#':
+        if (
+            previous_direction != Direction.DOWN
+            and self.camera.get_character(self.x, self.y - 1) == "#"
+        ):
             return Direction.UP
 
         return None
@@ -199,16 +218,28 @@ class Pathfinder:
     def move_forward_as_far_as_possible(self) -> int:
         forward_count = 0
         while True:
-            if self.droid_direction == Direction.UP and self.camera.get_character(self.x, self.y-1) == '#':
+            if (
+                self.droid_direction == Direction.UP
+                and self.camera.get_character(self.x, self.y - 1) == "#"
+            ):
                 forward_count += 1
                 self.y = self.y - 1
-            elif self.droid_direction == Direction.DOWN and self.camera.get_character(self.x, self.y+1) == '#':
+            elif (
+                self.droid_direction == Direction.DOWN
+                and self.camera.get_character(self.x, self.y + 1) == "#"
+            ):
                 forward_count += 1
                 self.y = self.y + 1
-            elif self.droid_direction == Direction.RIGHT and self.camera.get_character(self.x+1, self.y) == '#':
+            elif (
+                self.droid_direction == Direction.RIGHT
+                and self.camera.get_character(self.x + 1, self.y) == "#"
+            ):
                 forward_count += 1
                 self.x = self.x + 1
-            elif self.droid_direction == Direction.LEFT and self.camera.get_character(self.x-1, self.y) == '#':
+            elif (
+                self.droid_direction == Direction.LEFT
+                and self.camera.get_character(self.x - 1, self.y) == "#"
+            ):
                 forward_count += 1
                 self.x = self.x - 1
             else:
@@ -217,11 +248,11 @@ class Pathfinder:
 
     def compress(self, full_output: List):
         def all_slices(array):
-            for length in range(2, min(21, len(array)+1), 2):
-                for start_index in range(0, len(array)-length+1):
-                    if array[start_index] not in ['L', 'R']:
+            for length in range(2, min(21, len(array) + 1), 2):
+                for start_index in range(0, len(array) - length + 1):
+                    if array[start_index] not in ["L", "R"]:
                         continue
-                    yield start_index, array[start_index:start_index+length]
+                    yield start_index, array[start_index : start_index + length]
 
         def occurences(subarray, array) -> List[int]:
             if len(subarray) > len(array):
@@ -246,7 +277,7 @@ class Pathfinder:
             return ",".join(map(str, array))
 
         def validate_slice(array_slice: List) -> bool:
-            if 'A' in array_slice or 'B' in array_slice or 'C' in array_slice:
+            if "A" in array_slice or "B" in array_slice or "C" in array_slice:
                 return False
 
             if len(array_slice) < 6:
@@ -270,7 +301,9 @@ class Pathfinder:
 
             compressed_a = full_output[:]
             for index in reversed(indices_a):
-                compressed_a = compressed_a[:index] + ['A'] + compressed_a[index + len(array_slice_a):]
+                compressed_a = (
+                    compressed_a[:index] + ["A"] + compressed_a[index + len(array_slice_a) :]
+                )
 
             for _, array_slice_b in all_slices(compressed_a):
                 if viable:
@@ -283,7 +316,9 @@ class Pathfinder:
 
                 compressed_b = compressed_a[:]
                 for index in reversed(indices_b):
-                    compressed_b = compressed_b[:index] + ['B'] + compressed_b[index + len(array_slice_b):]
+                    compressed_b = (
+                        compressed_b[:index] + ["B"] + compressed_b[index + len(array_slice_b) :]
+                    )
 
                 for _, array_slice_c in all_slices(compressed_b):
                     if viable:
@@ -296,14 +331,18 @@ class Pathfinder:
 
                     compressed_c = compressed_b[:]
                     for index in reversed(indices_c):
-                        compressed_c = compressed_c[:index] + ['C'] + compressed_c[index + len(array_slice_c):]
+                        compressed_c = (
+                            compressed_c[:index]
+                            + ["C"]
+                            + compressed_c[index + len(array_slice_c) :]
+                        )
 
                     if len(combine(compressed_c)) > 20:
                         continue
 
                     non_sub = False
                     for value in compressed_c:
-                        if value not in ['A', 'B', 'C']:
+                        if value not in ["A", "B", "C"]:
                             non_sub = True
                             break
 

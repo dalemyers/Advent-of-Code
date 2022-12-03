@@ -6,10 +6,12 @@ from typing import List, Tuple
 WIDTH = 25
 HEIGHT = 6
 
+
 class Color(enum.Enum):
     BLACK = 0
     WHITE = 1
     TRANSPARENT = 2
+
 
 def count_colors(layer: List[List[Color]], color: Color) -> int:
     count = 0
@@ -18,6 +20,7 @@ def count_colors(layer: List[List[Color]], color: Color) -> int:
             if pixel == color:
                 count += 1
     return count
+
 
 def generate_layers(values):
     layers = []
@@ -38,6 +41,7 @@ def generate_layers(values):
 
     return layers
 
+
 def part1():
     min_count = WIDTH * HEIGHT
     min_layer = None
@@ -49,6 +53,7 @@ def part1():
             min_layer = layer
 
     return count_colors(min_layer, Color.WHITE) * count_colors(min_layer, Color.TRANSPARENT)
+
 
 def flatten_layers(layers):
 
@@ -71,10 +76,10 @@ def render_image(image):
     for row in image:
         for pixel in row:
             if pixel == Color.WHITE:
-                print(' ', sep='', end='')
+                print(" ", sep="", end="")
             else:
-                print('#', sep='', end='')
-        print('\n', sep='', end='')
+                print("#", sep="", end="")
+        print("\n", sep="", end="")
 
 
 with open("year_2019/input_08.txt") as input_file:

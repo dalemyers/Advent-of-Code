@@ -9,7 +9,7 @@ distances = {}
 
 
 for line in contents.splitlines():
-    #Tristram to Snowdin = 100
+    # Tristram to Snowdin = 100
     places, distance = line.split(" = ")
     a, b = places.split(" to ")
     distance = int(distance)
@@ -46,4 +46,3 @@ for route in routes:
 
 print("Part 1:", min_dist)
 print("Part 2:", max_dist)
-

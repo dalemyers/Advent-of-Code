@@ -63,7 +63,7 @@ def solve(sizes, target_size):
             new_index = index + 1
 
         # The new size is going to be the current size, minius the size of the
-        # one we just got rid of, plus the new size. 
+        # one we just got rid of, plus the new size.
         new_size = size - sizes[index] + sizes[new_index]
         stack.append((new_index, new_size))
 

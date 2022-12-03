@@ -1,4 +1,3 @@
-
 def fuel_required(mass: int) -> int:
     return int(float(mass) / 3) - 2
 
@@ -10,7 +9,6 @@ with open("input_01.txt") as f:
         total_fuel += fuel_required(mass)
 
 print("Part 1:", total_fuel)
-
 
 
 total_fuel = 0

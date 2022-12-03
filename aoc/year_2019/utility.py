@@ -3,6 +3,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 from PIL import Image
 
+
 def chunk(input_list: List[Any], chunk_size: int) -> List[List[Any]]:
     """Split a list into chunks of the specified size."""
     chunks = []
@@ -13,6 +14,7 @@ def chunk(input_list: List[Any], chunk_size: int) -> List[List[Any]]:
 
 def position_key(x: int, y: int) -> str:
     return f"{x}/{y}"
+
 
 def position_from_key(key: str) -> Tuple[int, int]:
     return tuple(map(int, key.split("/")))
@@ -34,27 +36,27 @@ def render_bw_grid(grid: List[List[int]]) -> str:
     height = len(grid)
     width = len(grid[0])
 
-    img = Image.new('L', (width, height), "black")
+    img = Image.new("L", (width, height), "black")
     pixels = img.load()
 
     for y, row in enumerate(grid):
         for x, pixel in enumerate(row):
-            pixels[x,y] = pixel
+            pixels[x, y] = pixel
 
     img.show()
 
 
-def render_grid(grid: List[List[Any]], color_map: Dict[Any, Tuple[int,int,int]]) -> str:
+def render_grid(grid: List[List[Any]], color_map: Dict[Any, Tuple[int, int, int]]) -> str:
 
     height = len(grid)
     width = len(grid[0])
 
-    img = Image.new('RGB', (width, height), "white")
+    img = Image.new("RGB", (width, height), "white")
     pixels = img.load()
 
     for y, row in enumerate(grid):
         for x, pixel in enumerate(row):
-            pixels[x,y] = color_map[pixel]
+            pixels[x, y] = color_map[pixel]
 
     img.show()
 
@@ -74,7 +76,11 @@ def render_ascii(grid: List[List[Any]], ascii_map: Optional[Dict[Any, str]] = No
     return output
 
 
-def dict_grid_to_real(grid: Dict[str, Any], default: Any, minimal_bounding: Optional[Tuple[Tuple[int, int], Tuple[int, int]]] = None) -> List[List[Any]]:
+def dict_grid_to_real(
+    grid: Dict[str, Any],
+    default: Any,
+    minimal_bounding: Optional[Tuple[Tuple[int, int], Tuple[int, int]]] = None,
+) -> List[List[Any]]:
     if minimal_bounding is None:
         min_x = None
         max_x = None
@@ -87,7 +93,7 @@ def dict_grid_to_real(grid: Dict[str, Any], default: Any, minimal_bounding: Opti
         max_y = minimal_bounding[1][1]
 
     for key in grid.keys():
-        x,y = key.split("/")
+        x, y = key.split("/")
         x = int(x)
         y = int(y)
         if min_x == None or x < min_x:

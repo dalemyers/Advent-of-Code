@@ -6,6 +6,7 @@ import string
 with open("year_2016/input_04.txt") as f:
     contents = f.readlines()
 
+
 def parse_entries():
     pattern = re.compile("([a-z\-]*)-(\d*)\[([a-z]*)\]")
 
@@ -25,7 +26,7 @@ def parse_entries():
 
 
 def validate_entry(name, sector_id, checksum):
-    
+
     counter = collections.Counter()
     name = name.replace("-", "")
     counter.update(name)
@@ -36,7 +37,7 @@ def validate_entry(name, sector_id, checksum):
         value = counter[key]
         count_list.append((key, value))
 
-    count_list.sort(key=lambda x: (x[1], ord('z') - ord(x[0])), reverse=True)
+    count_list.sort(key=lambda x: (x[1], ord("z") - ord(x[0])), reverse=True)
 
     calculated_checksum = ""
     for letter, _ in count_list[:5]:
@@ -47,8 +48,7 @@ def validate_entry(name, sector_id, checksum):
 
 def rot_encode(value, n):
     lookup = str.maketrans(
-        string.ascii_lowercase,
-        string.ascii_lowercase[n:] + string.ascii_lowercase[:n]
+        string.ascii_lowercase, string.ascii_lowercase[n:] + string.ascii_lowercase[:n]
     )
 
     return value.translate(lookup)
@@ -79,6 +79,7 @@ def part2():
             return sector_id
 
     return None
+
 
 print("Part 1:", part1())
 print("Part 2:", part2())

@@ -12,7 +12,7 @@ def part1():
         counter += 1
         data = key + str(counter)
         md5 = hashlib.md5()
-        md5.update(data.encode('utf-8'))
+        md5.update(data.encode("utf-8"))
         digest = md5.digest().hex()
         if digest.startswith("00000"):
             password += digest[5]
@@ -29,7 +29,7 @@ def part2():
         counter += 1
         data = key + str(counter)
         md5 = hashlib.md5()
-        md5.update(data.encode('utf-8'))
+        md5.update(data.encode("utf-8"))
         digest = md5.digest().hex()
         if digest.startswith("00000"):
             index = digest[5]
@@ -45,5 +45,6 @@ def part2():
                 if None not in password:
                     return "".join(password)
 
-#print("Part 1:", part1())
+
+# print("Part 1:", part1())
 print("Part 2:", part2())

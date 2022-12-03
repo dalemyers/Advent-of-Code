@@ -8,16 +8,19 @@ import intcode
 import pathfinding
 import utility
 
+
 class Movement(enum.Enum):
     NORTH = 1
     SOUTH = 2
     WEST = 3
     EAST = 4
 
+
 class DroidStatus(enum.Enum):
     HIT_WALL = 0
     MOVED_STEP = 1
     MOVED_STEP_AT_OXYGEN = 2
+
 
 class Tile(enum.Enum):
     DROID = "D"
@@ -25,6 +28,7 @@ class Tile(enum.Enum):
     TRAVERSABLE = " "
     UNEXPLORED = "."
     OXYGEN = "O"
+
 
 class RepairDroid:
 
@@ -142,14 +146,30 @@ def get_open_neighbors(node, droid):
     output = []
     x, y = node
 
-    if droid.grid.get(utility.position_key(x-1, y)) in [Tile.TRAVERSABLE, Tile.OXYGEN, Tile.DROID]:
-        output.append((x-1, y))
-    if droid.grid.get(utility.position_key(x+1, y)) in [Tile.TRAVERSABLE, Tile.OXYGEN, Tile.DROID]:
-        output.append((x+1, y))
-    if droid.grid.get(utility.position_key(x, y-1)) in [Tile.TRAVERSABLE, Tile.OXYGEN, Tile.DROID]:
-        output.append((x, y-1))
-    if droid.grid.get(utility.position_key(x, y+1)) in [Tile.TRAVERSABLE, Tile.OXYGEN, Tile.DROID]:
-        output.append((x, y+1))
+    if droid.grid.get(utility.position_key(x - 1, y)) in [
+        Tile.TRAVERSABLE,
+        Tile.OXYGEN,
+        Tile.DROID,
+    ]:
+        output.append((x - 1, y))
+    if droid.grid.get(utility.position_key(x + 1, y)) in [
+        Tile.TRAVERSABLE,
+        Tile.OXYGEN,
+        Tile.DROID,
+    ]:
+        output.append((x + 1, y))
+    if droid.grid.get(utility.position_key(x, y - 1)) in [
+        Tile.TRAVERSABLE,
+        Tile.OXYGEN,
+        Tile.DROID,
+    ]:
+        output.append((x, y - 1))
+    if droid.grid.get(utility.position_key(x, y + 1)) in [
+        Tile.TRAVERSABLE,
+        Tile.OXYGEN,
+        Tile.DROID,
+    ]:
+        output.append((x, y + 1))
 
     return output
 
@@ -177,7 +197,7 @@ def part1(input_values) -> None:
         end,
         lambda node: get_open_neighbors(node, droid),
         distance_between_fnct=distance_between,
-        heuristic_cost_estimate_fnct=distance_between
+        heuristic_cost_estimate_fnct=distance_between,
     )
 
     result_path = list(results)
@@ -210,7 +230,9 @@ def part2(input_values) -> None:
         for cell in next_iteration:
             neighbors = get_open_neighbors(cell, droid)
             for neighbor in neighbors:
-                if droid.grid.get(utility.position_key(neighbor[0], neighbor[1]), Tile.UNEXPLORED) in [Tile.TRAVERSABLE, Tile.DROID]:
+                if droid.grid.get(
+                    utility.position_key(neighbor[0], neighbor[1]), Tile.UNEXPLORED
+                ) in [Tile.TRAVERSABLE, Tile.DROID]:
                     buffer.append(neighbor)
         for cell in next_iteration:
             droid.grid[utility.position_key(cell[0], cell[1])] = Tile.OXYGEN

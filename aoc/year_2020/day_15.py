@@ -23,7 +23,6 @@ def play(stop_turn):
     return last_spoken
 
 
-
 def part1():
     return play(2020)
 

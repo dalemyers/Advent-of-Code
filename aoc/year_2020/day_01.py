@@ -2,6 +2,7 @@ from shared import read_ints_from_file
 
 values = read_ints_from_file("year_2020/input_01.txt")
 
+
 def part1():
     v_set = set(values)
     for value in v_set:

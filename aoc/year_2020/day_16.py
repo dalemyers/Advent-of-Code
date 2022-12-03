@@ -3,6 +3,7 @@ from shared import read_file_lines
 
 contents = read_file_lines("year_2020/input_16.txt")
 
+
 def get_info():
     fields = {}
     my_ticket = None
@@ -65,6 +66,7 @@ def part1():
 
     return sum(all_invalid_values)
 
+
 def part2():
     fields, my_ticket, tickets = get_info()
 
@@ -85,9 +87,9 @@ def part2():
         for field, ranges in fields.items():
             invalid_value = False
             for value in all_values:
-               if not in_ranges(value, ranges):
-                   invalid_value = True
-                   break
+                if not in_ranges(value, ranges):
+                    invalid_value = True
+                    break
 
             if invalid_value:
                 continue
@@ -115,6 +117,7 @@ def part2():
             total *= my_ticket[value]
 
     return total
+
 
 print("Part 1:", part1())
 print("Part 2:", part2())

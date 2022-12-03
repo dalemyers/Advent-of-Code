@@ -1,6 +1,7 @@
 import enum
 from typing import Callable, Dict, List, Optional, Tuple
 
+
 class Opcode(enum.Enum):
     ADD = 1
     MULTIPLY = 2
@@ -13,18 +14,23 @@ class Opcode(enum.Enum):
     RELATIVE_BASE_OFFSET = 9
     HALT = 99
 
+
 class ParameterMode(enum.Enum):
     POSITION = 0
     IMMEDIATE = 1
     RELATIVE = 2
 
+
 def input_list_wrapper(input_list: List[int]):
     def wrapper(name) -> int:
         return input_list.pop(0)
+
     return wrapper
+
 
 class HaltException(Exception):
     pass
+
 
 class Computer:
 
@@ -36,7 +42,14 @@ class Computer:
     input_callback: Optional[Callable]
     output_callback: Optional[Callable]
 
-    def __init__(self, *, name: str = "", program: List[int], input_callback: Optional[Callable] = None, output_callback: Optional[Callable] = None) -> None:
+    def __init__(
+        self,
+        *,
+        name: str = "",
+        program: List[int],
+        input_callback: Optional[Callable] = None,
+        output_callback: Optional[Callable] = None,
+    ) -> None:
         self.name = name
         self.is_halted = False
         self.program = {}
@@ -48,7 +61,7 @@ class Computer:
         self.output_callback = output_callback
 
     @staticmethod
-    def from_string(string_integers: str) -> 'Program':
+    def from_string(string_integers: str) -> "Program":
         return Program(list(map(int, string_integers.split(","))))
 
     def get_next(self, parameter_mode: ParameterMode, *, address: bool = False) -> int:
@@ -121,14 +134,30 @@ class Computer:
             parameter_modes.append(ParameterMode(mode_value))
 
         defaults = {
-            Opcode.ADD: [ParameterMode.POSITION, ParameterMode.POSITION, ParameterMode.POSITION],
-            Opcode.MULTIPLY: [ParameterMode.POSITION, ParameterMode.POSITION, ParameterMode.POSITION],
+            Opcode.ADD: [
+                ParameterMode.POSITION,
+                ParameterMode.POSITION,
+                ParameterMode.POSITION,
+            ],
+            Opcode.MULTIPLY: [
+                ParameterMode.POSITION,
+                ParameterMode.POSITION,
+                ParameterMode.POSITION,
+            ],
             Opcode.INPUT: [ParameterMode.POSITION],
             Opcode.OUTPUT: [ParameterMode.POSITION],
             Opcode.JUMP_IF_TRUE: [ParameterMode.POSITION, ParameterMode.POSITION],
             Opcode.JUMP_IF_FALSE: [ParameterMode.POSITION, ParameterMode.POSITION],
-            Opcode.LESS_THAN: [ParameterMode.POSITION, ParameterMode.POSITION, ParameterMode.POSITION],
-            Opcode.EQUALS: [ParameterMode.POSITION, ParameterMode.POSITION, ParameterMode.POSITION],
+            Opcode.LESS_THAN: [
+                ParameterMode.POSITION,
+                ParameterMode.POSITION,
+                ParameterMode.POSITION,
+            ],
+            Opcode.EQUALS: [
+                ParameterMode.POSITION,
+                ParameterMode.POSITION,
+                ParameterMode.POSITION,
+            ],
             Opcode.RELATIVE_BASE_OFFSET: [ParameterMode.POSITION],
             Opcode.HALT: [],
         }
@@ -138,7 +167,6 @@ class Computer:
             default_modes[index] = mode
 
         return opcode, default_modes
-
 
     def do_next(self) -> Opcode:
         if self.is_halted:

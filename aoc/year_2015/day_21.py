@@ -1,13 +1,14 @@
 import enum
 import itertools
 
+
 class ItemType(enum.Enum):
     weapon = 1
     armor = 2
     ring = 3
 
-class Item:
 
+class Item:
     def __init__(self, name, cost, damage, armor, item_type):
         self.name = name
         self.cost = cost
@@ -20,6 +21,7 @@ class Item:
 
     def __str__(self):
         return self.__repr__()
+
 
 weapons = [
     Item("Dagger", 8, 4, 0, ItemType.weapon),
@@ -47,7 +49,8 @@ rings = [
     Item("Defense +3", 80, 0, 3, ItemType.ring),
 ]
 
-def fight(hp, damage, armor, boss_hp = 103, boss_damage = 9, boss_armor = 2):
+
+def fight(hp, damage, armor, boss_hp=103, boss_damage=9, boss_armor=2):
     while True:
         boss_hp -= max(damage - boss_armor, 1)
         if boss_hp <= 0:
@@ -57,15 +60,18 @@ def fight(hp, damage, armor, boss_hp = 103, boss_damage = 9, boss_armor = 2):
             return False
 
 
-
 def part1():
     min_cost = 99999999999
 
     for weapon in weapons:
         for armor in armors:
-            for ring_selection in itertools.chain(itertools.permutations(rings, 1), itertools.permutations(rings, 2)):
+            for ring_selection in itertools.chain(
+                itertools.permutations(rings, 1), itertools.permutations(rings, 2)
+            ):
                 cost = weapon.cost + armor.cost + sum([ring.cost for ring in ring_selection])
-                damage = weapon.damage + armor.damage + sum([ring.damage for ring in ring_selection])
+                damage = (
+                    weapon.damage + armor.damage + sum([ring.damage for ring in ring_selection])
+                )
                 tarmor = weapon.armor + armor.armor + sum([ring.armor for ring in ring_selection])
 
                 if fight(100, damage, tarmor):
@@ -80,9 +86,13 @@ def part2():
 
     for weapon in weapons:
         for armor in armors:
-            for ring_selection in itertools.chain(itertools.permutations(rings, 1), itertools.permutations(rings, 2)):
+            for ring_selection in itertools.chain(
+                itertools.permutations(rings, 1), itertools.permutations(rings, 2)
+            ):
                 cost = weapon.cost + armor.cost + sum([ring.cost for ring in ring_selection])
-                damage = weapon.damage + armor.damage + sum([ring.damage for ring in ring_selection])
+                damage = (
+                    weapon.damage + armor.damage + sum([ring.damage for ring in ring_selection])
+                )
                 tarmor = weapon.armor + armor.armor + sum([ring.armor for ring in ring_selection])
 
                 if not fight(100, damage, tarmor):

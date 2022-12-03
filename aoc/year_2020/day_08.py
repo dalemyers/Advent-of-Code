@@ -37,10 +37,7 @@ def part1():
 
 
 def part2():
-    instruction_lookup = {
-        "jmp": "nop",
-        "nop": "jmp"
-    }
+    instruction_lookup = {"jmp": "nop", "nop": "jmp"}
 
     for i in range(len(base_instructions)):
         if base_instructions[i][0] not in ["nop", "jmp"]:
