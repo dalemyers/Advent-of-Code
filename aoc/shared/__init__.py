@@ -4,6 +4,7 @@ from .grids import *
 from .grouping import *
 from .input import *
 from .maths import *
+from .points import *
 
 
 def is_int(value) -> bool:
