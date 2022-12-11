@@ -2,6 +2,13 @@ import os
 from typing import List
 
 
+def read_file(path: str) -> str:
+    base_path = os.path.dirname(__file__)
+    aoc_path = os.path.abspath(os.path.join(base_path, ".."))
+    with open(os.path.join(aoc_path, path), encoding="utf-8") as input_file:
+        return input_file.read()
+
+
 def read_file_lines(path, strip: bool = True):
     base_path = os.path.dirname(__file__)
     aoc_path = os.path.abspath(os.path.join(base_path, ".."))
@@ -23,10 +30,7 @@ def read_ints_from_file(path: str) -> List[int]:
 
 
 def read_int_comma_separated_from_file(path: str) -> List[int]:
-    base_path = os.path.dirname(__file__)
-    aoc_path = os.path.abspath(os.path.join(base_path, ".."))
-    with open(os.path.join(aoc_path, path), encoding="utf-8") as f:
-        input_data = f.read().strip()
+    input_data = read_file(path).strip()
     return list(map(int, input_data.split(",")))
 
 
@@ -64,3 +68,8 @@ def read_chunked_ints(path: str) -> List[List[int]]:
         chunk.append(int(line))
 
     return chunks
+
+
+def read_chunked(path: str) -> List[str]:
+    contents = read_file(path)
+    return contents.split("\n\n")
