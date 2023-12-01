@@ -5,6 +5,7 @@ from .grouping import *
 from .input import *
 from .maths import *
 from .points import *
+from .strings import *
 
 
 def is_int(value) -> bool:
