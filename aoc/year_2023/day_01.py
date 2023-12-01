@@ -16,10 +16,21 @@ def part1() -> int:
 
     return total
 
+
 def part2() -> int:
     """Part 2."""
 
-    number_map = {"one": "1", "two": "2", "three": "3", "four": "4", "five": "5", "six": "6", "seven": "7", "eight": "8", "nine": "9"}
+    number_map = {
+        "one": "1",
+        "two": "2",
+        "three": "3",
+        "four": "4",
+        "five": "5",
+        "six": "6",
+        "seven": "7",
+        "eight": "8",
+        "nine": "9",
+    }
     numbers = list(number_map.keys()) + list(number_map.values())
 
     total = 0
@@ -31,7 +42,7 @@ def part2() -> int:
                 continue
             digits += [(number, i) for i in indices]
 
-        ordered_digits = sorted(digits, key= lambda t: t[1])
+        ordered_digits = sorted(digits, key=lambda t: t[1])
         first_digit = ordered_digits[0][0]
         first_digit = number_map.get(first_digit, first_digit)
         last_digit = ordered_digits[-1][0]
@@ -40,6 +51,7 @@ def part2() -> int:
         total += int(first_digit + last_digit)
 
     return total
+
 
 if __name__ == "__main__":
     print("Part 1:", part1())
