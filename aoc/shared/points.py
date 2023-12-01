@@ -34,6 +34,9 @@ class Point:
 
         return Point(x, y)
 
+    def manhattan_distance(self, x: int, y: int) -> int:
+        return int(math.fabs(self.x - x)) + int(math.fabs(self.y - y))
+
     def __repr__(self) -> str:
         return f"<Point x={self.x} y={self.y}>"
 
@@ -41,7 +44,7 @@ class Point:
         if not isinstance(other, Point):
             return False
 
-        return self.x == other.y and self.y == other.y
+        return self.x == other.x and self.y == other.y
 
     def __hash__(self) -> int:
         return hash((self.x, self.y))
