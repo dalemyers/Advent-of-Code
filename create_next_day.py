@@ -30,30 +30,53 @@ for filename in os.listdir(latest_year_path):
 days.append(0)
 
 latest_day = sorted(days)[-1]
+current_day = latest_day + 1
 
 latest_day_path = os.path.join(latest_year_path, f"day_{latest_day:02}.py")
 latest_input_path = os.path.join(latest_year_path, f"input_{latest_day:02}.txt")
 
-next_day_path = os.path.join(latest_year_path, f"day_{latest_day+1:02}.py")
-next_input_path = os.path.join(latest_year_path, f"input_{latest_day+1:02}.txt")
+next_day_path = os.path.join(latest_year_path, f"day_{current_day:02}.py")
+next_input_path = os.path.join(latest_year_path, f"input_{current_day:02}.txt")
 
 if not os.path.exists(next_day_path):
-    shutil.copy(latest_day_path, next_day_path)
+    with open(next_day_path, "w", encoding="utf-8") as f:
+        f.write(
+            f"""\"""Day {current_day}\"""
+
+from aoc.shared import read_file_lines
+
+lines = read_file_lines("year_{latest_year}/input_{current_day:02}.txt")
+
+
+def part1() -> int:
+    \"""Part 1.\"""
+
+    return 0
+
+
+def part2() -> int:
+    \"""Part 2.\"""
+
+    return 0
+
+
+if __name__ == "__main__":
+    print("Part 1:", part1())
+    print("Part 2:", part2())
+"""
+        )
 
 if not os.path.exists(next_input_path):
-    shutil.copy(latest_input_path, next_input_path)
+    with open(next_input_path, "w", encoding="utf-8") as f:
+        f.write("")
 
-with open(
-    os.path.join(latest_year_path, "__init__.py"), "a", encoding="utf-8"
-) as init_file:
-    init_file.write(f"from aoc.year_{latest_year} import day_{latest_day+1:02}\n")
+with open(os.path.join(latest_year_path, "__init__.py"), "a", encoding="utf-8") as init_file:
+    init_file.write(f"from aoc.year_{latest_year} import day_{current_day:02}\n")
 
-with open(
-    os.path.join(latest_year_path, f"test_{latest_year}.py"), "a", encoding="utf-8"
-) as test_file:
+with open(os.path.join(latest_year_path, f"test_{latest_year}.py"), "a", encoding="utf-8") as test_file:
     test_file.write("\n\n")
-    test_file.write(f"def test_day_{latest_day+1:02}():\n")
-    test_file.write(f'    """Test day {latest_day+1:02}."""\n')
+    test_file.write(f"def test_day_{current_day:02}():\n")
+    test_file.write(f'    """Test day {current_day:02}."""\n')
     test_file.write("\n")
-    test_file.write(f"    assert day_{latest_day+1:02}.part1() == 0\n")
-    test_file.write(f"    assert day_{latest_day+1:02}.part2() == 0\n")
+    test_file.write(f"    assert day_{current_day:02}.part1() == 0\n")
+    test_file.write(f"    assert day_{current_day:02}.part2() == 0\n")
