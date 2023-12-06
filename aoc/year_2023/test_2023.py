@@ -28,4 +28,11 @@ def test_day_04():
     """Test day 04."""
 
     assert day_04.part1() == 26914
-    assert day_04.part2() == 0
+    assert day_04.part2() == 13080971
+
+
+def test_day_05():
+    """Test day 05."""
+
+    assert day_05.part1() == 278755257
+    assert day_05.part2() == 26829166
