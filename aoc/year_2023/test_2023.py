@@ -48,12 +48,19 @@ def test_day_06():
 def test_day_07():
     """Test day 07."""
 
-    assert day_07.part1() == 19199
-    assert day_07.part2() == 13_663_968_099_527
+    assert day_07.part1() == 248453531
+    assert day_07.part2() == 248781813
 
 
 def test_day_08():
     """Test day 08."""
 
-    assert day_08.part1() == 0
-    assert day_08.part2() == 0
+    assert day_08.part1() == 19199
+    assert day_08.part2() == 13_663_968_099_527
+
+
+def test_day_09():
+    """Test day 09."""
+
+    assert day_09.part1() == 1868368343
+    assert day_09.part2() == 1022
