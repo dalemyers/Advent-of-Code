@@ -70,10 +70,27 @@ if not os.path.exists(next_input_path):
     with open(next_input_path, "w", encoding="utf-8") as f:
         f.write("")
 
-with open(os.path.join(latest_year_path, "__init__.py"), "a", encoding="utf-8") as init_file:
+init_path = os.path.join(latest_year_path, "__init__.py")
+
+if not os.path.exists(init_path):
+    with open(init_path, "w", encoding="utf-8") as init_file:
+        init_file.write(f'"""{latest_year}"""\n\n')
+
+with open(init_path, "a", encoding="utf-8") as init_file:
     init_file.write(f"from aoc.year_{latest_year} import day_{current_day:02}\n")
 
-with open(os.path.join(latest_year_path, f"test_{latest_year}.py"), "a", encoding="utf-8") as test_file:
+from aoc.year_2023 import *
+
+
+test_path = os.path.join(latest_year_path, f"test_{latest_year}.py")
+
+if not os.path.exists(test_path):
+    with open(test_path, "w", encoding="utf-8") as test_file:
+        test_file.write(f'"""Test {latest_year}."""\n')
+        test_file.write("\n")
+        test_file.write(f"from aoc.year_{latest_year} import *")
+
+with open(test_path, "a", encoding="utf-8") as test_file:
     test_file.write("\n\n")
     test_file.write(f"def test_day_{current_day:02}():\n")
     test_file.write(f'    """Test day {current_day:02}."""\n')
