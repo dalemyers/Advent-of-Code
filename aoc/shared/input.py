@@ -34,7 +34,7 @@ def read_int_comma_separated_from_file(path: str) -> List[int]:
     return list(map(int, input_data.split(",")))
 
 
-def read_int_grid_file(path: str) -> List[List[int]]:
+def read_int_grid_file(path: str, *, spaces: bool = False) -> List[List[int]]:
     base_path = os.path.dirname(__file__)
     aoc_path = os.path.abspath(os.path.join(base_path, ".."))
     with open(os.path.join(aoc_path, path), encoding="utf-8") as f:
@@ -44,7 +44,11 @@ def read_int_grid_file(path: str) -> List[List[int]]:
 
     for line in input_data:
         output_line = []
-        for value in line.strip():
+        if spaces:
+            sequence = line.strip().split(" ")
+        else:
+            sequence = line.strip()
+        for value in sequence:
             output_line.append(int(value))
         output.append(output_line)
 
