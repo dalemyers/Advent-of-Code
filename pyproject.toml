@@ -5,9 +5,7 @@ description = "Advent of Code"
 
 license = "MIT"
 
-authors = [
-    "Dale Myers <dalemy@microsoft.com>"
-]
+authors = ["Dale Myers <dale@myers.io>"]
 
 readme = 'README.md'
 
@@ -17,15 +15,15 @@ homepage = "https://github.com/dalemyers/Advent-of-Code"
 keywords = ['advent', 'code', 'aoc']
 
 [tool.poetry.dependencies]
-python = "^3.9.0"
+python = "^3.13.0"
 astar = "=0.9"
-pillow = "^9.0"
+pillow = "^12.0"
 
 [tool.poetry.dev-dependencies]
-black = "=21.11b1"
-mypy = "=0.910"
-pylint = "=2.12.1"
-pytest = "=6.2.5"
+black = "=25.11.0"
+mypy = "=1.19.0"
+pylint = "=4.0.4"
+pytest = "=9.0.1"
 
 
 [build-system]
