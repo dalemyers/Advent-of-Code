@@ -6,3 +6,4 @@ from aoc.year_2025 import day_03
 from aoc.year_2025 import day_04
 from aoc.year_2025 import day_05
 from aoc.year_2025 import day_06
+from aoc.year_2025 import day_07
