@@ -17,7 +17,7 @@ keywords = ['advent', 'code', 'aoc']
 [tool.poetry.dependencies]
 python = "^3.13.0"
 astar = "=0.9"
-pillow = "^12.2"
+pillow = "^12.3"
 
 [tool.poetry.dev-dependencies]
 black = "=25.11.0"
